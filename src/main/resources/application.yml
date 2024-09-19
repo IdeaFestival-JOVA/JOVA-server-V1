@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: JOVA-server-V1
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  logging:
+    level:
+      root: INFO
+      org.springframework.web: DEBUG
+    file:
+      path: ./logs/application.log
+  data:
+    jdbc:
+      dialect: mysql
