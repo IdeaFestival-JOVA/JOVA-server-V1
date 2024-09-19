@@ -1,7 +1,7 @@
 package com.jova.domain.auth.service.Impl;
 
 import com.jova.domain.auth.dto.request.SignInRequest;
-import com.jova.domain.auth.dto.response.tokenResponse;
+import com.jova.domain.auth.dto.response.TokenResponse;
 import com.jova.domain.auth.entity.Auth;
 import com.jova.domain.auth.enums.Authority;
 import com.jova.domain.auth.exception.AuthNotFoundException;
@@ -48,7 +48,7 @@ public class SignInServiceImpl implements SignInService {
     }
 
     @Override
-    public tokenResponse signIn(SignInRequest request) {
+    public TokenResponse signIn(SignInRequest request) {
         try {
             GAuthToken gAuthToken = gAuth.generateToken(
                     request.getCode(), clientId, clientSecret, redirectUri
@@ -62,7 +62,7 @@ public class SignInServiceImpl implements SignInService {
                     throw new AuthNotFoundException("Auth 생성 실패");
                 }
             }
-            tokenResponse tokenResponse = jwtProvider.generateTokenDto(auth.getId());
+            TokenResponse tokenResponse = jwtProvider.generateTokenDto(auth.getId());
             if (tokenResponse == null) {
                 throw new AuthNotFoundException("토큰 생성 실패");
             }
@@ -114,7 +114,7 @@ public class SignInServiceImpl implements SignInService {
         return authRepository.save(auth);
     }
 
-    private void saveRefreshToken(tokenResponse tokenResponse, Auth auth) {
+    private void saveRefreshToken(TokenResponse tokenResponse, Auth auth) {
         if (auth.getId() != null) {
             RefreshToken refreshToken = new RefreshToken();
             refreshToken.setRefreshToken(tokenResponse.getRefreshToken());
