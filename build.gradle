@@ -63,6 +63,9 @@ dependencies {
     // Validation (Jakarta)
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 
+    //Swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+
     // Testing Dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
