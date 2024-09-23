@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.9.25'
-    id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.10'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.9.10'
     id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
 }
@@ -12,7 +12,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
@@ -24,8 +24,8 @@ configurations {
 
 repositories {
     mavenCentral()
-	mavenLocal()
-	maven { url = uri("https://jitpack.io") }
+    mavenLocal()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -37,8 +37,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // Kotlin Support
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
-    implementation 'org.jetbrains.kotlin:kotlin-reflect'
 
     // Lombok Support
     compileOnly 'org.projectlombok:lombok'
@@ -51,8 +52,13 @@ dependencies {
     implementation 'com.github.YangSiJun528:GAuth-spring-boot-starter:3.0.0'
     implementation 'com.github.GSM-MSG:GAuth-SDK-Java:v3.0.0'
 
+    // JWT
+    implementation "io.jsonwebtoken:jjwt-api:0.11.5"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:0.11.5"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:0.11.5"
+
     // Database Client
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     // Validation (Jakarta)
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
@@ -63,9 +69,16 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll '-Xjsr305=strict'
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'src/main/kotlin']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java', 'src/test/kotlin']
+        }
     }
 }
 
@@ -73,9 +86,13 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+bootJar {
+    mainClass = 'com.jova.ApplicationKt'
+}
+
 tasks.withType(KotlinCompile) {
     kotlinOptions {
-        jvmTarget = "21"
+        jvmTarget = "17"
         freeCompilerArgs += "-Xjsr305=strict"
     }
 }
