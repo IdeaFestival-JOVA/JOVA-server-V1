@@ -1,6 +1,7 @@
 package com.jova.domain.auth.service.Impl;
 
 import com.jova.domain.auth.dto.request.SignInRequest;
+import com.jova.global.security.jwt.entity.RefreshToken;
 import com.jova.domain.auth.dto.response.TokenResponse;
 import com.jova.domain.auth.entity.Auth;
 import com.jova.domain.auth.enums.Authority;
@@ -8,6 +9,8 @@ import com.jova.domain.auth.exception.AuthNotFoundException;
 import com.jova.domain.auth.repository.AuthRepository;
 import com.jova.domain.auth.service.SignInService;
 import com.jova.domain.auth.vo.StudentNum;
+import com.jova.global.security.jwt.provider.JwtProvider;
+import com.jova.global.security.jwt.repository.RefreshRepository;
 import gauth.GAuth;
 import gauth.GAuthToken;
 import gauth.GAuthUserInfo;
@@ -16,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.jova.global.security.jwt.JwtProvider;
-import com.jova.domain.auth.entity.RefreshToken;
+
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -37,10 +40,7 @@ public class SignInServiceImpl implements SignInService {
     private String redirectUri;
 
     @Autowired
-    public SignInServiceImpl(GAuth gAuth,
-                             AuthRepository authRepository,
-                             RefreshRepository refreshRepository,
-                             JwtProvider jwtProvider) {
+    public SignInServiceImpl(GAuth gAuth, AuthRepository authRepository, RefreshRepository refreshRepository, JwtProvider jwtProvider) {
         this.gAuth = gAuth;
         this.authRepository = authRepository;
         this.refreshRepository = refreshRepository;
@@ -50,22 +50,17 @@ public class SignInServiceImpl implements SignInService {
     @Override
     public TokenResponse signIn(SignInRequest request) {
         try {
-            GAuthToken gAuthToken = gAuth.generateToken(
-                    request.getCode(), clientId, clientSecret, redirectUri
-            );
+            GAuthToken gAuthToken = gAuth.generateToken(request.getCode(), clientId, clientSecret, redirectUri);
             String accessToken = gAuthToken.getAccessToken();
             GAuthUserInfo userInfo = gAuth.getUserInfo(accessToken);
             Auth auth = authRepository.findByEmail(userInfo.getEmail());
             if (auth == null) {
                 auth = saveAuth(userInfo);
                 if (auth == null) {
-                    throw new AuthNotFoundException("Auth 생성 실패");
+                    throw new AuthNotFoundException();
                 }
             }
-            TokenResponse tokenResponse = jwtProvider.generateTokenDto(auth.getId());
-            if (tokenResponse == null) {
-                throw new AuthNotFoundException("토큰 생성 실패");
-            }
+            TokenResponse tokenResponse = jwtProvider.generateTokenDto(Objects.requireNonNull(auth.getId()));
             saveRefreshToken(tokenResponse, auth);
             return tokenResponse;
         } catch (GAuthException e) {
@@ -92,11 +87,7 @@ public class SignInServiceImpl implements SignInService {
         Auth auth = new Auth();
         auth.setEmail(gAuthUserInfo.getEmail());
         auth.setName(gAuthUserInfo.getName());
-        auth.setStudentNum(new StudentNum(
-                gAuthUserInfo.getGrade(),
-                gAuthUserInfo.getClassNum(),
-                gAuthUserInfo.getNum()
-        ));
+        auth.setStudentNum(new StudentNum(gAuthUserInfo.getGrade(), gAuthUserInfo.getClassNum(), gAuthUserInfo.getNum()));
         auth.setAuthority(Authority.ROLE_STUDENT);
         return authRepository.save(auth);
     }
@@ -105,11 +96,7 @@ public class SignInServiceImpl implements SignInService {
         Auth auth = new Auth();
         auth.setEmail(gAuthUserInfo.getEmail());
         auth.setName(gAuthUserInfo.getName());
-        auth.setStudentNum(new StudentNum(
-                gAuthUserInfo.getGrade(),
-                gAuthUserInfo.getClassNum(),
-                gAuthUserInfo.getNum()
-        ));
+        auth.setStudentNum(new StudentNum(gAuthUserInfo.getGrade(), gAuthUserInfo.getClassNum(), gAuthUserInfo.getNum()));
         auth.setAuthority(Authority.ROLE_TEACHER);
         return authRepository.save(auth);
     }
@@ -119,7 +106,7 @@ public class SignInServiceImpl implements SignInService {
             RefreshToken refreshToken = new RefreshToken();
             refreshToken.setRefreshToken(tokenResponse.getRefreshToken());
             refreshToken.setUserId(auth.getId());
-            refreshToken.setExpiredAt(tokenResponse.getRefreshTokenExpiresIn());
+            refreshToken.setExpiredAt(tokenResponse.getRefreshTokenExpiration());
             refreshRepository.save(refreshToken);
         }
     }
