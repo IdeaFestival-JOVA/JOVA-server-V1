@@ -5,10 +5,14 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.spring' version '1.9.10'
     id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.jetbrains.kotlin.plugin.lombok' version '1.9.10'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.10'
+    id 'java'
 }
 
 group = 'com.jova'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
 java {
     toolchain {
@@ -63,24 +67,18 @@ dependencies {
     // Validation (Jakarta)
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 
-    //Swagger
+    // Swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
     // Testing Dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 sourceSets {
     main {
         java {
-            srcDirs = ['src/main/java', 'src/main/kotlin']
-        }
-    }
-    test {
-        java {
-            srcDirs = ['src/test/java', 'src/test/kotlin']
+            srcDirs("src/main/java", "src/main/kotlin")
         }
     }
 }
@@ -89,11 +87,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-bootJar {
-    mainClass = 'com.jova.ApplicationKt'
-}
-
-tasks.withType(KotlinCompile) {
+tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
         jvmTarget = "17"
         freeCompilerArgs += "-Xjsr305=strict"

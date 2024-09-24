@@ -28,6 +28,9 @@ spring:
   data:
     jdbc:
       dialect: mysql
+server:
+  servlet:
+    context-path: /api
 jwt:
   secret: ${JWT_SECRET}
 gauth:

@@ -19,8 +19,4 @@ data class RefreshToken(
 
     @Column(name = "expired_at", nullable = false)
     var expiredAt: LocalDateTime
-) {
-    constructor() : this("", UUID.randomUUID(), LocalDateTime.now()){
-
-    }
-}
+)

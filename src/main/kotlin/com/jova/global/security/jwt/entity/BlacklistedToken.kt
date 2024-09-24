@@ -13,6 +13,4 @@ data class BlacklistedToken(
     @Column(name = "token", nullable = false, unique = true, length = 512) val token: String,
 
     @Column(name = "expired_at", nullable = false) val expiredAt: LocalDateTime
-) {
-    constructor() : this(0, "", LocalDateTime.now())
-}
+)

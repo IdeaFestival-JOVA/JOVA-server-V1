@@ -1,4 +1,4 @@
-package com.jova.global.security.jwt.provider
+package com.jova.global.security.jwt.service
 
 import com.jova.domain.auth.dto.response.TokenResponse
 import com.jova.global.auth.service.AuthDetailsService
@@ -6,8 +6,10 @@ import com.jova.global.exception.ErrorCode
 import com.jova.global.exception.JovaException
 import com.jova.global.security.jwt.exception.ExpiredTokenException
 import com.jova.global.security.jwt.exception.InvalidTokenException
-import com.jova.global.security.jwt.service.BlacklistedTokenService
-import io.jsonwebtoken.*
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
@@ -19,13 +21,14 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 import java.security.Key
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
 @Component
 class JwtProvider(
-    private val authDetailsService: AuthDetailsService,
-    private val blacklistedTokenService: BlacklistedTokenService
+    private val authDetailsService: AuthDetailsService, private val blacklistedTokenService: BlacklistedTokenService
 ) {
     @Value("\${jwt.secret}")
     private lateinit var secretKey: String
@@ -60,9 +63,12 @@ class JwtProvider(
         return tokenResponse
     }
 
-    fun getExpiration(accessToken: String): Long {
+    fun getExpiration(accessToken: String): LocalDateTime {
         val claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).body
-        return claims.expiration.time
+        val expirationTime = claims.expiration.time
+        return Instant.ofEpochMilli(expirationTime)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
     }
 
     fun validateToken(token: String): Boolean {
