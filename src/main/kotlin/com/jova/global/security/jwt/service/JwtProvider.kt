@@ -21,7 +21,9 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 import java.security.Key
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
 @Component
@@ -61,9 +63,12 @@ class JwtProvider(
         return tokenResponse
     }
 
-    fun getExpiration(accessToken: String): Long {
+    fun getExpiration(accessToken: String): LocalDateTime {
         val claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).body
-        return claims.expiration.time
+        val expirationTime = claims.expiration.time
+        return Instant.ofEpochMilli(expirationTime)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
     }
 
     fun validateToken(token: String): Boolean {
