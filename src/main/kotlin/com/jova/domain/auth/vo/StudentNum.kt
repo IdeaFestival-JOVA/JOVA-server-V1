@@ -13,8 +13,6 @@ data class StudentNum(
 
     @Column(nullable = false, length = 2) val number: Int
 ) {
-    constructor() : this(0, 0, 0)
-
     fun generateStudentId(): Int {
         return (grade * 1000) + (classNum * 100) + number
     }
