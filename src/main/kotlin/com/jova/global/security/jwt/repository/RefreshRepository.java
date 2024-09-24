@@ -4,9 +4,9 @@ import com.jova.global.security.jwt.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 public interface RefreshRepository extends JpaRepository<RefreshToken, String> {
-    void deleteByRefreshToken(String refreshToken);
-
-    RefreshToken findByRefreshToken(String refreshToken);
+    RefreshToken findByUserId(UUID memberId);
 }
