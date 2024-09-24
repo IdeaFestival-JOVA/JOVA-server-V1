@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    image: jova
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=${DB_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - GAUTH_CLIENT_ID=${GAUTH_CLIENT_ID}
+      - GAUTH_CLIENT_SECRET=${GAUTH_CLIENT_SECRET}
+      - GAUTH_REDIRECT_URI=${GAUTH_REDIRECT_URI}
