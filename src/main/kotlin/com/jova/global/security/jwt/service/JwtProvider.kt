@@ -1,4 +1,4 @@
-package com.jova.global.security.jwt.provider
+package com.jova.global.security.jwt.service
 
 import com.jova.domain.auth.dto.response.TokenResponse
 import com.jova.global.auth.service.AuthDetailsService
@@ -6,8 +6,10 @@ import com.jova.global.exception.ErrorCode
 import com.jova.global.exception.JovaException
 import com.jova.global.security.jwt.exception.ExpiredTokenException
 import com.jova.global.security.jwt.exception.InvalidTokenException
-import com.jova.global.security.jwt.service.BlacklistedTokenService
-import io.jsonwebtoken.*
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
@@ -24,8 +26,7 @@ import java.util.*
 
 @Component
 class JwtProvider(
-    private val authDetailsService: AuthDetailsService,
-    private val blacklistedTokenService: BlacklistedTokenService
+    private val authDetailsService: AuthDetailsService, private val blacklistedTokenService: BlacklistedTokenService
 ) {
     @Value("\${jwt.secret}")
     private lateinit var secretKey: String
