@@ -82,9 +82,7 @@ class JwtProvider(
 
     fun getAuthentication(accessToken: String): Authentication {
         val claims = parseClaims(accessToken)
-        if (claims[AUTHORITIES_KEY] == null) {
-            throw JovaException(ErrorCode.INVALID_TOKEN)
-        }
+        claims[AUTHORITIES_KEY] ?: throw JovaException(ErrorCode.INVALID_TOKEN)
         val principal: UserDetails = authDetailsService.loadUserByUsername(claims.subject)
         return UsernamePasswordAuthenticationToken(principal, "", principal.authorities)
     }
