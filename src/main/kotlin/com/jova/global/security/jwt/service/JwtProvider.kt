@@ -66,9 +66,7 @@ class JwtProvider(
     fun getExpiration(accessToken: String): LocalDateTime {
         val claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).body
         val expirationTime = claims.expiration.time
-        return Instant.ofEpochMilli(expirationTime)
-            .atZone(ZoneId.systemDefault())
-            .toLocalDateTime()
+        return Instant.ofEpochMilli(expirationTime).atZone(ZoneId.systemDefault()).toLocalDateTime()
     }
 
     fun validateToken(token: String): Boolean {
@@ -84,11 +82,9 @@ class JwtProvider(
 
     fun getAuthentication(accessToken: String): Authentication {
         val claims = parseClaims(accessToken)
-
         if (claims[AUTHORITIES_KEY] == null) {
             throw JovaException(ErrorCode.INVALID_TOKEN)
         }
-
         val principal: UserDetails = authDetailsService.loadUserByUsername(claims.subject)
         return UsernamePasswordAuthenticationToken(principal, "", principal.authorities)
     }
@@ -131,7 +127,7 @@ class JwtProvider(
 
     fun blacklistToken(token: String) {
         val claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
-        val expiration = claims.expiration.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime()
+        val expiration = claims.expiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
 
         blacklistedTokenService.addTokenToBlacklist(token, expiration)
     }

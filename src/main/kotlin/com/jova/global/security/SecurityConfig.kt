@@ -25,10 +25,10 @@ class SecurityConfig(
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { request ->
                 request.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll().requestMatchers(
-                        "gauth/authorization", "/auth/reissue", "/auth/logout","/auth/login"
-                    ).permitAll().requestMatchers(
-                        "/role/student", "/role/teacher"
-                    ).authenticated().requestMatchers("/role/student").hasAuthority("GAUTH_ROLE_STUDENT")
+                    "/gauth/authorization", "/auth/reissue", "/auth/logout", "/auth/login"
+                ).permitAll().requestMatchers(
+                    "/auth"
+                ).authenticated().requestMatchers("/role/student").hasAuthority("GAUTH_ROLE_STUDENT")
                     .requestMatchers("/role/teacher").hasAuthority("GAUTH_ROLE_TEACHER").anyRequest().denyAll()
             }.addFilterBefore(JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter::class.java)
         gAuthLoginConfigurer.configure(http)
