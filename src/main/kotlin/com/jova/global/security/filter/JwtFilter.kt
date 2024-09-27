@@ -18,7 +18,11 @@ class JwtFilter(private val jwtProvider: JwtProvider) : OncePerRequestFilter() {
     }
 
     private val excludePaths = setOf(
-        "/gauth/authorization", "/api/auth/login", "/api/auth/logout", "/api/auth/reissue","/api/swagger-ui/index.html"
+        "/gauth/authorization",
+        "/api/auth/login",
+        "/api/auth/logout",
+        "/api/auth/reissue",
+        "/api/swagger-ui/index.html"
     )
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
