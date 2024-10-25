@@ -1,6 +1,6 @@
 package com.jova.domain.application.entity;
 
-import com.jova.domain.article.entity.ArticleEntity;
+import com.jova.domain.article.entity.Article;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,18 +18,20 @@ public class Application {
 
     @ManyToOne
     @JoinColumn(name="article_id", nullable=false)
-    private ArticleEntity articleEntity;
+    private Article article;
 /*
     private String applicant;
     private String applicant_category;
     private String applicant_gradeandclass;*/
 
+
+
     @Column(name="applied_time", nullable=false)
     private LocalDateTime appliedAt;
 
     @Builder
-    public Application(ArticleEntity articleEntity, LocalDateTime appliedAt) {
-        this.articleEntity = articleEntity;
+    public Application(Article article, LocalDateTime appliedAt) {
+        this.article = article;
         this.appliedAt = appliedAt != null ? appliedAt : LocalDateTime.now();
     }
 }

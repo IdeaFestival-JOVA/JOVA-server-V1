@@ -1,6 +1,6 @@
 package com.jova.domain.article.dto.request;
 
-import com.jova.domain.article.entity.ArticleEntity;
+import com.jova.domain.article.entity.Article;
 import lombok.Builder;
 import java.time.LocalDateTime;
 
@@ -19,8 +19,8 @@ public class ArticleRequestDTO {
         this.createdAt = createdAt;
     }
 
-    public ArticleEntity toEntity(){
-            return ArticleEntity.builder()
+    public Article toEntity(){
+            return Article.builder()
                     .title(title)
                     .content(content)
                     .category(category)
