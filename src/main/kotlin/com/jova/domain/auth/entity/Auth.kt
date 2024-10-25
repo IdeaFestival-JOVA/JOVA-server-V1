@@ -9,7 +9,7 @@ import java.util.UUID
 @Entity
 @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 data class Auth(
-    @Id @GeneratedValue(generator = "UUID") val id: UUID? = null,
+    @Id @GeneratedValue(generator = "UUID") val authid: UUID? = null,
 
     var email: String? = null,
 
