@@ -15,6 +15,7 @@ style | 단순한 코드 형식 변경, 코드 변경이 없는 경우
 refactor | 코드 리팩토링을 했을 때
 test | 테스트 코드를 작성했을 때
 chore | 귀찮은 일 해냈을 때
+delete | 파일을 삭제했을 때
 
 Footer | Description
 --|--
