@@ -28,6 +28,7 @@ public class AuthController {
     private final SignInService signInService;
     private final ReissueTokenService reissueTokenService;
     private final LogoutService logoutService;
+    private final AuthInfoService authInfoService;
 
     @Operation(summary = "로그인", description = "GAuth를 이용한 로그인을 수행하는 API")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "로그인 성공"), @ApiResponse(responseCode = "400", description = "로그인 실패")})
