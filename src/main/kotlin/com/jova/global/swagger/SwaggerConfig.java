@@ -24,7 +24,7 @@ public class SwaggerConfig {
     public GroupedOpenApi authApi() {
         return GroupedOpenApi.builder()
                 .group("auth-api")
-                .pathsToMatch("/auth/**") // AuthController에서 정의한 API 경로
+                .pathsToMatch("/auth/**")
                 .build();
     }
 }
