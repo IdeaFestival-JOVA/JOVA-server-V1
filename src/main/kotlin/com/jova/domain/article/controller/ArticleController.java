@@ -1,14 +1,16 @@
 package com.jova.domain.article.controller;
 
 import com.jova.domain.article.dto.request.ArticleRequestDTO;
-import com.jova.domain.article.entity.ArticleEntity;
+import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.service.ArticleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name="ArticleAPI", description = "게시글 관리 API")
 @RestController
 @RequestMapping("/articles")
 
@@ -22,31 +24,31 @@ public class ArticleController {
 
     //게시글 전체 조회
     @GetMapping()
-    public List<ArticleEntity> getAllArticles(){
+    public List<Article> getAllArticles(){
         return articleService.findAll();
     }
 
     //특정 게시글 조회
     @GetMapping("/{id}")
-    public ArticleEntity getArticleById(@PathVariable @NotNull Long id){
+    public Article getArticleById(@PathVariable @NotNull Long id){
         return articleService.findArticleById(id);
     }
 
     //게시글 생성
     @PostMapping
-    public ArticleEntity createArticle(@RequestBody @NotBlank ArticleRequestDTO articleRequestDTO){
+    public Article createArticle(@RequestBody @NotBlank ArticleRequestDTO articleRequestDTO){
         return articleService.saveArticle(articleRequestDTO.toEntity());
     }
 
     //게시글 수정
     @PutMapping("/{id}")
-    public ArticleEntity updateArticle(@PathVariable Long id, @RequestBody ArticleEntity article){
+    public Article updateArticle(@PathVariable Long id, @RequestBody Article article){
         @NotBlank
-        ArticleEntity existedarticleEntity = articleService.findArticleById(id);
-        existedarticleEntity.setTitle(article.getTitle());
-        existedarticleEntity.setContent(article.getContent());
-        existedarticleEntity.setCategory(article.getCategory());
-        return articleService.saveArticle(existedarticleEntity);
+        Article existedarticle = articleService.findArticleById(id);
+        existedarticle.setTitle(article.getTitle());
+        existedarticle.setContent(article.getContent());
+        existedarticle.setCategory(article.getCategory());
+        return articleService.saveArticle(existedarticle);
     }
 
     //게시글 삭제

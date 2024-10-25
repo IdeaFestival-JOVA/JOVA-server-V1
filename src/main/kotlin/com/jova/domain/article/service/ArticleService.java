@@ -1,6 +1,6 @@
 package com.jova.domain.article.service;
 
-import com.jova.domain.article.entity.ArticleEntity;
+import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.repository.ArticleRepositiory;
 
 import org.springframework.stereotype.Service;
@@ -16,16 +16,16 @@ public class ArticleService {
     public ArticleService(ArticleRepositiory articleRepositiory) {
         this.articleRepositiory = articleRepositiory;
     }
-    public List<ArticleEntity> findAll() {
+    public List<Article> findAll() {
         return articleRepositiory.findAll();
     }
 
-    public ArticleEntity saveArticle(ArticleEntity article) {
+    public Article saveArticle(Article article) {
         articleRepositiory.save(article);
         return article;
     }
 
-    public ArticleEntity findArticleById(Long id) {
+    public Article findArticleById(Long id) {
         return articleRepositiory.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
     }
 
