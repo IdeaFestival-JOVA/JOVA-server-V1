@@ -25,16 +25,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-    @Autowired
     private final SignInService signInService;
-    @Autowired
     private final ReissueTokenService reissueTokenService;
-    @Autowired
     private final LogoutService logoutService;
-    @Autowired
-    private JwtProvider jwtProvider;
-    @Autowired
-    private AuthInfoService authInfoService;
 
     @Operation(summary = "로그인", description = "GAuth를 이용한 로그인을 수행하는 API")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "로그인 성공"), @ApiResponse(responseCode = "400", description = "로그인 실패")})
