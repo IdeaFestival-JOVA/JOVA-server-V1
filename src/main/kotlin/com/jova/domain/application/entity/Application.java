@@ -1,6 +1,7 @@
 package com.jova.domain.application.entity;
 
 import com.jova.domain.article.entity.Article;
+import com.jova.domain.auth.entity.Auth;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,19 +20,18 @@ public class Application {
     @ManyToOne
     @JoinColumn(name="article_id", nullable=false)
     private Article article;
-/*
-    private String applicant;
-    private String applicant_category;
-    private String applicant_gradeandclass;*/
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="authid", nullable=false)
+    private Auth auth;
 
     @Column(name="applied_time", nullable=false)
     private LocalDateTime appliedAt;
 
     @Builder
-    public Application(Article article, LocalDateTime appliedAt) {
+    public Application(Article article, LocalDateTime appliedAt, Auth auth) {
         this.article = article;
         this.appliedAt = appliedAt != null ? appliedAt : LocalDateTime.now();
+        this.auth = auth;
     }
 }
