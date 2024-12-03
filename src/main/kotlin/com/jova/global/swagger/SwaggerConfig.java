@@ -17,7 +17,7 @@ public class SwaggerConfig {
                         .title("Jova Auth API")
                         .version("1.0.0")
                         .description("Jova 프로젝트의 계정 관련 API 문서입니다.")
-                        .license(new License().name("Apache 2.0").url("http://springdoc.org")));
+                        .license(new License().name("Apache 2.0").url("https://springdoc.org")));
     }
 
     @Bean

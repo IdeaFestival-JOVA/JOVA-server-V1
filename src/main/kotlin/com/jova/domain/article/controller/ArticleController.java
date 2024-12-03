@@ -3,6 +3,7 @@ package com.jova.domain.article.controller;
 import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.service.ArticleService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
 import org.jetbrains.annotations.NotNull;
@@ -22,25 +23,25 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    //게시글 전체 조회
+    @Operation(summary = "게시글 전체 조회", description = "게시글을 전체 조회하는 API")
     @GetMapping()
     public List<Article> getAllArticles(){
         return articleService.findAll();
     }
 
-    //특정 게시글 조회
+    @Operation(summary = "특정 게시글 조회", description = "특정 게시글을 조회하는 API")
     @GetMapping("/{id}")
     public Article getArticleById(@PathVariable @NotNull Long id){
         return articleService.findArticleById(id);
     }
 
-    //게시글 생성
+    @Operation(summary = "게시글 생성", description = "게시글을 생성하는 API")
     @PostMapping
     public Article createArticle(@RequestBody @NotBlank ArticleRequestDTO articleRequestDTO){
         return articleService.saveArticle(articleRequestDTO.toEntity());
     }
 
-    //게시글 수정
+    @Operation(summary = "게시글 수정", description = "게시글을 수정하는 API")
     @PutMapping("/{id}")
     public Article updateArticle(@PathVariable Long id, @RequestBody Article article){
         @NotBlank
@@ -51,7 +52,7 @@ public class ArticleController {
         return articleService.saveArticle(existedarticle);
     }
 
-    //게시글 삭제
+    @Operation(summary = "게시글 삭제", description = "게시글을 삭제하는 API")
     @DeleteMapping("/{id}")
     public void deleteArticleById(@PathVariable @NotNull Long id){
         articleService.deleteArticleById(id);

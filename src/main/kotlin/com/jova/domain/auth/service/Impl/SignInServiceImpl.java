@@ -60,7 +60,7 @@ public class SignInServiceImpl implements SignInService {
                     throw new AuthNotFoundException();
                 }
             }
-            TokenResponse tokenResponse = jwtProvider.generateTokenDto(Objects.requireNonNull(auth.getId()));
+            TokenResponse tokenResponse = jwtProvider.generateTokenDto(Objects.requireNonNull(auth.getAuthid()));
             saveRefreshToken(tokenResponse, auth);
             return tokenResponse;
         } catch (GAuthException e) {
@@ -102,10 +102,10 @@ public class SignInServiceImpl implements SignInService {
     }
 
     private void saveRefreshToken(TokenResponse tokenResponse, Auth auth) {
-        if (auth.getId() != null) {
+        if (auth.getAuthid() != null) {
             RefreshToken refreshToken = new RefreshToken();
             refreshToken.setRefreshToken(tokenResponse.getRefreshToken());
-            refreshToken.setUserId(auth.getId());
+            refreshToken.setUserId(auth.getAuthid());
             refreshToken.setExpiredAt(tokenResponse.getRefreshTokenExpiration());
             refreshRepository.save(refreshToken);
         }

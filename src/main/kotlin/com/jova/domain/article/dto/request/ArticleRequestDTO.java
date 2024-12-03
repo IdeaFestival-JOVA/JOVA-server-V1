@@ -1,6 +1,7 @@
 package com.jova.domain.article.dto.request;
 
 import com.jova.domain.article.entity.Article;
+import com.jova.domain.user.UserMajor;
 import lombok.Builder;
 import java.time.LocalDateTime;
 
@@ -8,11 +9,11 @@ import java.time.LocalDateTime;
 public class ArticleRequestDTO {
     private String title;
     private String content;
-    private String category;
+    private UserMajor category;
     private LocalDateTime createdAt;
 
     @Builder
-    public ArticleRequestDTO(String title, String content, String category, LocalDateTime createdAt) {
+    public ArticleRequestDTO(String title, String content, UserMajor category, LocalDateTime createdAt) {
         this.title = title;
         this.content = content;
         this.category = category;
