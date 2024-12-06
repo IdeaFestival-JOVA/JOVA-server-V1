@@ -24,6 +24,9 @@ public class Application {
     @Column(name="유저전공",nullable = false, unique = true)
     private UserMajor major;
 
+    @Column(name="내용")
+    private String content;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="authid", nullable=false)
     private Auth auth;
@@ -36,10 +39,13 @@ public class Application {
     private LocalDateTime appliedAt;
 
     @Builder
-    public Application(Article article, LocalDateTime appliedAt, Auth auth) {
+    public Application(Article article, LocalDateTime appliedAt, Auth auth, String content, UserMajor major) {
         this.article = article;
         this.appliedAt = appliedAt != null ? appliedAt : LocalDateTime.now();
         this.auth = auth;
+        this.content = content;
+        this.major = major;
     }
+
 
 }
