@@ -1,34 +1,32 @@
 package com.jova.domain.article.entity;
 
+import com.jova.domain.user.UserMajor;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-
 import java.time.LocalDateTime;
 
-
-@Entity
+@Entity(name="article_entity")
 @Getter
 @Setter
 @NoArgsConstructor
 
-public class ArticleEntity {
+public class Article {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long article_id;
     @Column(nullable = false, name="article_title")
     private String title;
     @Column(nullable = false, name="article_content")
     private String content;
     @Column(nullable = false, name="article_category")
-    private String category;
+    private UserMajor category;
     @Column(nullable = false, name="article_time")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Builder
-    public ArticleEntity(String title, String content, String category, LocalDateTime createdAt) {
+    public Article(String title, String content, UserMajor category, LocalDateTime createdAt) {
         this.title = title;
         this.content = content;
         this.category = category;

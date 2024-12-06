@@ -27,7 +27,7 @@ public class LogoutServiceImpl implements LogoutService {
     @Override
     public void logout(String accessToken) {
         Auth auth = authUtil.getCurrentAser();
-        RefreshToken validRefreshToken = refreshRepository.findByUserId(auth.getId());
+        RefreshToken validRefreshToken = refreshRepository.findByUserId(auth.getAuthid());
         if (validRefreshToken == null) {
             throw new ExpiredRefreshTokenException();
         }
