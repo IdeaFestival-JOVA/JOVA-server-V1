@@ -13,14 +13,4 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
-
-    @GetMapping("/major")
-    public void chooseMajor(UserMajor userMajor) {
-
-    }
-
-    @GetMapping("/showprofile")
-    public String showProfile() {
-        return "";
-    }
 }
