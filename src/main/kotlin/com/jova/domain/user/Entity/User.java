@@ -1,5 +1,6 @@
 package com.jova.domain.user.Entity;
 
+import com.jova.domain.auth.vo.StudentNum;
 import com.jova.domain.user.UserMajor;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -26,10 +27,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private List<UserMajor> major;
 
-    @Builder
-    public User(String username, List<UserMajor> major) {
-        this.username = username;
-        this.major = major;
-    }
-
+    @Column(name="")
+    private StudentNum studentNum;
 }
