@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity(name="application_entity")
+@Entity(name="application")
 @NoArgsConstructor
 @Getter
 @Builder
