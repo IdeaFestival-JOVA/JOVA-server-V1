@@ -9,8 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity(name="application")
 @NoArgsConstructor
 @Getter
@@ -28,10 +26,10 @@ public class Application {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="authid", nullable=false)
+    @JoinColumn(name="Authid", nullable=false)
     private Auth auth;
 
-    @Column(name="applied_time", nullable=false)
-    private LocalDateTime createdAt;
+    @Column(name="작성된시간", nullable=false)
+    private String createdAt;
 
 }

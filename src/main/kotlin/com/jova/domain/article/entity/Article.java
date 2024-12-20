@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity(name="article")
 @Getter
 @Setter
@@ -24,14 +22,14 @@ public class Article {
     @Column(nullable = false, name = "article_category")
     private UserMajor category;
     @Column(nullable = false, name = "article_time")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private String createdAt;
 
     @Builder
-    public Article(String title, String content, UserMajor category, LocalDateTime createdAt) {
+    public Article(String title, String content, UserMajor category, String createdAt) {
         this.title = title;
         this.content = content;
         this.category = category;
-        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
+        this.createdAt = createdAt;
     }
 }
 

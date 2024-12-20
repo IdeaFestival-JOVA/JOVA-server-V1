@@ -57,5 +57,4 @@ public class ArticleController {
     public void deleteArticleById(@PathVariable @NotNull Long id){
         articleServiceImpl.deleteArticleById(id);
     }
-
 }

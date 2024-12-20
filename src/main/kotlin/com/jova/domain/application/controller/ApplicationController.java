@@ -1,6 +1,6 @@
 package com.jova.domain.application.controller;
 
-import com.jova.domain.application.dto.ApplicationDTO;
+import com.jova.domain.application.dto.request.ApplicationRequestDTO;
 import com.jova.domain.application.entity.Application;
 import com.jova.domain.application.repository.ApplicationRepository;
 
@@ -22,12 +22,12 @@ public class ApplicationController {
 
     private final ApplicationService applicationService;
     private final ApplicationRepository applicationRepository;
-    private ApplicationDTO applicationDTO;
+    private ApplicationRequestDTO applicationRequestDTO;
 
     @PostMapping("")
     @Operation(summary = "지원서 생성", description = "지원서 작성하는 API")
-    public Application createApplication(@RequestBody @NotBlank ApplicationDTO applicationDTO) {
-        return applicationRepository.save(applicationDTO.toEntity());
+    public Application createApplication(@RequestBody @NotBlank ApplicationRequestDTO applicationRequestDTO) {
+        return applicationRepository.save(applicationRequestDTO.toEntity());
     }
 
     @GetMapping("/list")
@@ -41,7 +41,7 @@ public class ApplicationController {
     }
 
     @PatchMapping("{id}")
-    public Optional<Application> updateApplication(@PathVariable Long id, @RequestBody ApplicationDTO applicationDTO) {
+    public Optional<Application> updateApplication(@PathVariable Long id, @RequestBody ApplicationRequestDTO applicationRequestDTO) {
         Optional<Application> existApplication = applicationService.findApplicationById(id);
 
         return existApplication;

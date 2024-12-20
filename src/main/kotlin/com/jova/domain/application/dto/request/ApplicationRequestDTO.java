@@ -1,18 +1,16 @@
-package com.jova.domain.application.dto;
+package com.jova.domain.application.dto.request;
 
 import com.jova.domain.application.entity.Application;
 import com.jova.domain.auth.entity.Auth;
 import com.jova.domain.user.UserMajor;
 import lombok.Builder;
 
-import java.time.LocalDateTime;
-
 @Builder
-public class ApplicationDTO {
+public class ApplicationRequestDTO {
     private UserMajor major;
     private String content;
     private Auth auth;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     public Application toEntity(){
         return Application.builder()
