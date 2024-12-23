@@ -36,7 +36,7 @@ public class ArticleController {
     }
 
     @Operation(summary = "게시글 생성", description = "게시글을 생성하는 API")
-    @PostMapping("/create")
+    @PostMapping("/")
     public Article createArticle(@RequestBody @NotBlank ArticleRequestDTO articleRequestDTO){
         return articleServiceImpl.saveArticle(articleRequestDTO.toEntity());
     }
@@ -57,5 +57,4 @@ public class ArticleController {
     public void deleteArticleById(@PathVariable @NotNull Long id){
         articleServiceImpl.deleteArticleById(id);
     }
-
 }

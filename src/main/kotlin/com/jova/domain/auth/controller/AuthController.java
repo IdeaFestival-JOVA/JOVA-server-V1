@@ -7,7 +7,6 @@ import com.jova.domain.auth.service.AuthInfoService;
 import com.jova.domain.auth.service.LogoutService;
 import com.jova.domain.auth.service.ReissueTokenService;
 import com.jova.domain.auth.service.SignInService;
-import com.jova.global.security.jwt.service.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
