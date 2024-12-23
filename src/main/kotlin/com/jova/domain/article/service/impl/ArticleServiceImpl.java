@@ -4,19 +4,17 @@ import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.repository.ArticleRepositiory;
 
 import com.jova.domain.article.service.ArticleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepositiory articleRepositiory;
-
-    public ArticleServiceImpl(ArticleRepositiory articleRepositiory) {
-        this.articleRepositiory = articleRepositiory;
-    }
 
     @Override
     public List<Article> findAll() {
@@ -25,8 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article saveArticle(Article article) {
-        articleRepositiory.save(article);
-        return article;
+        return articleRepositiory.save(article);
     }
 
     @Override
