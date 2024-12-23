@@ -29,7 +29,7 @@ class SecurityConfig(
                 ).permitAll().requestMatchers(
                     "/auth"
                 ).authenticated().requestMatchers("/role/student").hasAuthority("GAUTH_ROLE_STUDENT")
-                    .requestMatchers("/role/teacher").hasAuthority("GAUTH_ROLE_TEACHER").anyRequest().denyAll()
+                    .requestMatchers("/role/teacher").hasAuthority("GAUTH_ROLE_TEACHER").anyRequest().permitAll()
             }.addFilterBefore(JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter::class.java)
         gAuthLoginConfigurer.configure(http)
         return http.build()
