@@ -1,9 +1,9 @@
 package com.jova.domain.user.Controller;
 
-import com.jova.domain.user.Service.UserService;
-import com.jova.domain.user.UserMajor;
+import com.jova.domain.user.Entity.User;
+import com.jova.domain.user.Service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,5 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user/{id}")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
+
+    public User getUserById(@PathVariable Long id) {
+        userService.findUserById(id);
+    }
 }

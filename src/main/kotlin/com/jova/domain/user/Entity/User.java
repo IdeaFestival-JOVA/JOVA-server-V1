@@ -1,32 +1,66 @@
 package com.jova.domain.user.Entity;
 
-import com.jova.domain.auth.vo.StudentNum;
-import com.jova.domain.user.UserMajor;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity(name="user")
-@NoArgsConstructor
-@Setter
 @Getter
-public class User {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode(of = "id")
+public class User implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long id;
 
-    @Column(nullable = false, name="username")
+    @Column(nullable = false)
     private String username;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name="user_majors", joinColumns = @JoinColumn(name="user_id"))
-    @Column(name="user_major")
-    @Enumerated(EnumType.STRING)
-    private List<UserMajor> major;
+    @Column(nullable = false)
+    private String password;
 
-    @Column(name="")
-    private StudentNum studentNum;
+    @Column(nullable = false)
+    private String nickname;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String profileImage;
+
+    @ElementCollection(fetch=FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
