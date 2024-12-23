@@ -25,6 +25,7 @@ public class ArticleController {
 
     @Operation(summary = "게시글 전체 조회", description = "게시글을 전체 조회하는 API")
     @GetMapping("/list")
+
     public List<Article> getAllArticles(){
         return articleServiceImpl.findAll();
     }

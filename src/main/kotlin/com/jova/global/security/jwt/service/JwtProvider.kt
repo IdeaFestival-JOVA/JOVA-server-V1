@@ -54,12 +54,11 @@ class JwtProvider(
         val refreshToken = generateRefreshToken(id)
         val accessTokenExpiresIn = LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME / 1000)
         val refreshTokenExpiresIn = LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME / 1000)
-        val tokenResponse = TokenResponse(
-            accessToken = accessToken,
-            refreshToken = refreshToken,
-            accessTokenExpiration = accessTokenExpiresIn,
-            refreshTokenExpiration = refreshTokenExpiresIn
-        )
+        val tokenResponse = TokenResponse.builder().build()
+        tokenResponse.accessTokenExpiration = accessTokenExpiresIn
+        tokenResponse.refreshTokenExpiration = refreshTokenExpiresIn
+        tokenResponse.accessToken = accessToken
+        tokenResponse.refreshToken = refreshToken
         return tokenResponse
     }
 
