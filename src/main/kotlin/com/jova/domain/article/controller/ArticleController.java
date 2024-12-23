@@ -43,7 +43,7 @@ public class ArticleController {
     }
 
     @Operation(summary = "게시글 수정", description = "게시글을 수정하는 API")
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public Article updateArticle(@PathVariable Long id, @RequestBody Article article){
         @NotBlank
         Article existedarticle = articleServiceImpl.findArticleById(id);
@@ -54,7 +54,7 @@ public class ArticleController {
     }
 
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제하는 API")
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public void deleteArticleById(@PathVariable @NotNull Long id){
         articleServiceImpl.deleteArticleById(id);
     }
