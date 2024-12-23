@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TokenResponse {
+
     String accessToken;
     String refreshToken;
     String grantType;
+
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     LocalDateTime accessTokenExpiration;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")

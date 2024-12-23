@@ -4,7 +4,7 @@ import com.jova.domain.auth.entity.Auth;
 import com.jova.domain.auth.repository.AuthRepository;
 import com.jova.domain.auth.service.AuthInfoService;
 import com.jova.global.auth.userdetails.AuthDetails;
-import com.jova.global.security.jwt.service.JwtProvider;
+import com.jova.global.security.jwt.service.JwtTokenProviderJava;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthInfoServiceImpl implements AuthInfoService {
-    private final JwtProvider jwtProvider;
+    private final JwtTokenProviderJava jwtProvider;
     private final AuthRepository authRepository;
 
     @Override

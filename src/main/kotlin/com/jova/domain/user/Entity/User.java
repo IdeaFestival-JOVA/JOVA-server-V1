@@ -22,16 +22,19 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false)
-    private String username;
+    private String name;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
-    private String nickname;
+    private String username;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String profileImage;
+
+    @Column(nullable = false)
+    private int grade;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default

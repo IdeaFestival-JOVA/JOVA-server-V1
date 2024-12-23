@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user/{id}")
@@ -14,7 +16,7 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-    public User getUserById(@PathVariable Long id) {
-        userService.findUserById(id);
+    public Optional<User> getUserById(@PathVariable Long id) {
+        return userService.findUserById(id);
     }
 }
