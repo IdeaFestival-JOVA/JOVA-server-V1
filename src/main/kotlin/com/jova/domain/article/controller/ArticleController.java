@@ -3,6 +3,9 @@ package com.jova.domain.article.controller;
 import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.service.impl.ArticleServiceImpl;
+import com.jova.domain.auth.dto.response.TokenResponse;
+import com.jova.domain.auth.enums.Authority;
+import com.jova.global.security.jwt.service.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +21,8 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleServiceImpl articleServiceImpl;
+    private JwtProvider jwtProvider;
+    private TokenResponse tokenResponse;
 
     public ArticleController(ArticleServiceImpl articleServiceImpl) {
         this.articleServiceImpl = articleServiceImpl;
@@ -43,7 +48,7 @@ public class ArticleController {
     }
 
     @Operation(summary = "게시글 수정", description = "게시글을 수정하는 API")
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public Article updateArticle(@PathVariable Long id, @RequestBody Article article){
         @NotBlank
         Article existedarticle = articleServiceImpl.findArticleById(id);
@@ -54,7 +59,7 @@ public class ArticleController {
     }
 
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제하는 API")
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public void deleteArticleById(@PathVariable @NotNull Long id){
         articleServiceImpl.deleteArticleById(id);
     }
