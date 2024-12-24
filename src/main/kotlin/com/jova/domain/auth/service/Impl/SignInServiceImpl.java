@@ -60,7 +60,7 @@ public class SignInServiceImpl implements SignInService {
                     throw new AuthNotFoundException();
                 }
             }
-            TokenResponse tokenResponse = jwtProvider.generateTokenDto(Objects.requireNonNull(auth.getAuthid()));
+            TokenResponse tokenResponse = jwtProvider.generateTokenDto(Objects.requireNonNull(auth.getAuthid()),auth.getAuthority());
             saveRefreshToken(tokenResponse, auth);
             return tokenResponse;
         } catch (GAuthException e) {

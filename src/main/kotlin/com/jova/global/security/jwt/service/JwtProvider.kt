@@ -1,6 +1,7 @@
 package com.jova.global.security.jwt.service
 
 import com.jova.domain.auth.dto.response.TokenResponse
+import com.jova.domain.auth.enums.Authority
 import com.jova.global.auth.service.AuthDetailsService
 import com.jova.global.exception.ErrorCode
 import com.jova.global.exception.JovaException
@@ -38,7 +39,7 @@ class JwtProvider(
         private const val AUTHORITIES_KEY = "auth"
         private const val BEARER_TYPE = "Bearer "
         private const val ACCESS_TOKEN_TIME = 60L * 60 * 24 * 1000
-        private const val REFRESH_TOKEN_TIME = 60L * 60 * 24 * 30 * 1000
+        private const val REFRESH_TOKEN_TIME = 60L * 60 * 24 * 7 * 1000
         private const val AUTHORIZATION_HEADER = "Authorization"
         private const val BEARER_PREFIX = "Bearer "
     }
@@ -49,8 +50,8 @@ class JwtProvider(
         key = Keys.hmacShaKeyFor(keyBytes)
     }
 
-    fun generateTokenDto(id: UUID): TokenResponse {
-        val accessToken = generateAccessToken(id)
+    fun generateTokenDto(id: UUID,role:Authority): TokenResponse {
+        val accessToken = generateAccessToken(id,role)
         val refreshToken = generateRefreshToken(id)
         val accessTokenExpiresIn = LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME / 1000)
         val refreshTokenExpiresIn = LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME / 1000)
@@ -107,10 +108,10 @@ class JwtProvider(
         } else null
     }
 
-    fun generateAccessToken(id: UUID): String {
+    fun generateAccessToken(id: UUID,role:Authority): String {
         val now = Date().time
         val accessTokenExpiresIn = Date(now + ACCESS_TOKEN_TIME)
-        return Jwts.builder().setSubject(id.toString()).claim(AUTHORITIES_KEY, "JWT").setIssuedAt(Date())
+        return Jwts.builder().setSubject(id.toString()).claim(AUTHORITIES_KEY, role).setIssuedAt(Date())
             .setExpiration(accessTokenExpiresIn).signWith(key, SignatureAlgorithm.HS256).compact()
     }
 

@@ -24,11 +24,15 @@ class SecurityConfig(
         http.csrf { it.disable() }.cors { it.configurationSource(corsConfigurationSource()) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { request ->
-                request.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll().requestMatchers(
-                    "/gauth/authorization", "/auth/reissue", "/auth/logout", "/auth/login"
-                ).permitAll().requestMatchers(
-                    "/auth"
-                ).authenticated().requestMatchers("/role/student").hasAuthority("GAUTH_ROLE_STUDENT")
+                request
+                    .requestMatchers(
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/gauth/authorization",
+                        "/auth/reissue",
+                        "/auth/logout",
+                        "/auth/login"
+                ).permitAll()
                     .requestMatchers("/role/teacher").hasAuthority("GAUTH_ROLE_TEACHER").anyRequest().permitAll()
             }.addFilterBefore(JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter::class.java)
         gAuthLoginConfigurer.configure(http)
@@ -41,7 +45,7 @@ class SecurityConfig(
             allowedOrigins = listOf("*")
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
-            allowCredentials = false
+            allowCredentials = true
         }
         val restrictedCorsConfig = CorsConfiguration().apply {
             allowedOrigins = listOf("*")
