@@ -49,15 +49,16 @@ public class ArticleController {
     public Article updateArticle(@PathVariable Long id, @RequestBody Article article){
         @NotBlank
         Article existedarticle = articleServiceImpl.findArticleById(id);
-        existedarticle.setTitle(article.getTitle());
-        existedarticle.setContent(article.getContent());
-        existedarticle.setCategory(article.getCategory());
+        existedarticle.builder()
+                .title(article.getTitle())
+                .content(article.getContent())
+                .category(article.getCategory())
+                .author(article.getAuthor())
+                .build();
         return articleServiceImpl.saveArticle(existedarticle);
     }
 
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제하는 API")
     @DeleteMapping("/{id}")
-    public void deleteArticleById(@PathVariable @NotNull Long id){
-        articleServiceImpl.deleteArticleById(id);
-    }
+    public void deleteArticleById(@PathVariable @NotNull Long id){articleServiceImpl.deleteArticleById(id);}
 }
