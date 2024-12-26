@@ -1,10 +1,8 @@
 package com.jova.domain.article.controller;
 
-import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.service.impl.ArticleServiceImpl;
 import com.jova.domain.auth.dto.response.TokenResponse;
-import com.jova.domain.auth.enums.Authority;
 import com.jova.global.security.jwt.service.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,7 +15,6 @@ import java.util.List;
 @Tag(name="ArticleAPI", description = "게시글 관리 API")
 @RestController
 @RequestMapping("/articles")
-
 public class ArticleController {
 
     private final ArticleServiceImpl articleServiceImpl;

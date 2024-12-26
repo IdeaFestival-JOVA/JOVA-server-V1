@@ -1,5 +1,6 @@
 package com.jova.domain.user.Entity;
 
+import gauth.response.GAuthUserInfo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,6 +36,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private int grade;
+
+    @Column(nullable = false)
+    private int num;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default

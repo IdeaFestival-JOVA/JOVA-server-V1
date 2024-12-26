@@ -23,8 +23,10 @@ public class Article {
     private String content;
     @Column(nullable = false, name = "article_category")
     private UserMajor category;
-    @Column(nullable = false, name = "article_time")
+    @Column(nullable = false, name = "article_created_time")
     private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(nullable = false, name = "article_expire_time")
+    private LocalDateTime endsAt;
 
     @Builder
     public Article(String title, String content, UserMajor category) {
