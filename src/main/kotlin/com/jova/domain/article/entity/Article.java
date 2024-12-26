@@ -29,11 +29,12 @@ public class Article {
     private String author;
 
     @Builder
-    public Article(String title, String content, UserMajor category, String author) {
+    public Article(String title, String content, UserMajor category, String author, LocalDateTime endsAt) {
         this.title = title;
         this.content = content;
         this.category = category;
         this.author = author;
+        this.endsAt = endsAt;
     }
 }
 

@@ -16,7 +16,4 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-    public Optional<User> getUserById(@PathVariable Long id) {
-        return userService.findUserById(id);
-    }
 }
