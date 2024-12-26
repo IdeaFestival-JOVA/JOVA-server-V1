@@ -24,7 +24,6 @@ public class ArticleRequestDTO {
                     .title(title)
                     .content(content)
                     .category(category)
-                    .createdAt(createdAt)
                     .build();
     }
 }

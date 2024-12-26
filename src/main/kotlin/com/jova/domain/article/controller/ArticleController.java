@@ -43,8 +43,8 @@ public class ArticleController {
 
     @Operation(summary = "게시글 생성", description = "게시글을 생성하는 API")
     @PostMapping("/")
-    public Article createArticle(@RequestBody @NotBlank ArticleRequestDTO articleRequestDTO){
-        return articleServiceImpl.saveArticle(articleRequestDTO.toEntity());
+    public Article createArticle(@RequestBody @NotBlank Article article){
+        return articleServiceImpl.saveArticle(article);
     }
 
     @Operation(summary = "게시글 수정", description = "게시글을 수정하는 API")
