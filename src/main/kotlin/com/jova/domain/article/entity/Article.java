@@ -2,14 +2,14 @@ package com.jova.domain.article.entity;
 
 import com.jova.domain.user.UserMajor;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity(name="article")
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 
 public class Article {
@@ -21,15 +21,19 @@ public class Article {
     private String content;
     @Column(nullable = false, name = "article_category")
     private UserMajor category;
-    @Column(nullable = false, name = "article_time")
-    private String createdAt;
+    @Column(nullable = false, name = "article_created_time")
+    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(nullable = false, name = "article_expire_time")
+    private LocalDateTime endsAt;
+    @Column(nullable = false, name = "aritlce_author")
+    private String author;
 
     @Builder
-    public Article(String title, String content, UserMajor category, String createdAt) {
+    public Article(String title, String content, UserMajor category, String author) {
         this.title = title;
         this.content = content;
         this.category = category;
-        this.createdAt = createdAt;
+        this.author = author;
     }
 }
 

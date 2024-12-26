@@ -1,10 +1,8 @@
 package com.jova.domain.article.controller;
 
-import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.service.impl.ArticleServiceImpl;
 import com.jova.domain.auth.dto.response.TokenResponse;
-import com.jova.domain.auth.enums.Authority;
 import com.jova.global.security.jwt.service.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,7 +15,6 @@ import java.util.List;
 @Tag(name="ArticleAPI", description = "게시글 관리 API")
 @RestController
 @RequestMapping("/articles")
-
 public class ArticleController {
 
     private final ArticleServiceImpl articleServiceImpl;
@@ -43,8 +40,8 @@ public class ArticleController {
 
     @Operation(summary = "게시글 생성", description = "게시글을 생성하는 API")
     @PostMapping("/")
-    public Article createArticle(@RequestBody @NotBlank ArticleRequestDTO articleRequestDTO){
-        return articleServiceImpl.saveArticle(articleRequestDTO.toEntity());
+    public Article createArticle(@RequestBody @NotBlank Article article){
+        return articleServiceImpl.saveArticle(article);
     }
 
     @Operation(summary = "게시글 수정", description = "게시글을 수정하는 API")
@@ -52,15 +49,16 @@ public class ArticleController {
     public Article updateArticle(@PathVariable Long id, @RequestBody Article article){
         @NotBlank
         Article existedarticle = articleServiceImpl.findArticleById(id);
-        existedarticle.setTitle(article.getTitle());
-        existedarticle.setContent(article.getContent());
-        existedarticle.setCategory(article.getCategory());
+        existedarticle.builder()
+                .title(article.getTitle())
+                .content(article.getContent())
+                .category(article.getCategory())
+                .author(article.getAuthor())
+                .build();
         return articleServiceImpl.saveArticle(existedarticle);
     }
 
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제하는 API")
     @DeleteMapping("/{id}")
-    public void deleteArticleById(@PathVariable @NotNull Long id){
-        articleServiceImpl.deleteArticleById(id);
-    }
+    public void deleteArticleById(@PathVariable @NotNull Long id){articleServiceImpl.deleteArticleById(id);}
 }
