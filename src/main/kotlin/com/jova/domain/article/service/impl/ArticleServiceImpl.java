@@ -1,5 +1,6 @@
 package com.jova.domain.article.service.impl;
 
+import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.repository.ArticleRepositiory;
 
@@ -22,8 +23,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article saveArticle(Article article) {
-        return articleRepositiory.save(article);
+    public void saveArticle(Article article) {
+        articleRepositiory.save(article);
     }
 
     @Override
