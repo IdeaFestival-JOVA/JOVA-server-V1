@@ -1,5 +1,6 @@
 package com.jova.domain.auth.controller;
 
+import com.jova.domain.auth.dto.request.KeySignInRequest;
 import com.jova.domain.auth.dto.request.SignInRequest;
 import com.jova.domain.auth.dto.response.TokenResponse;
 import com.jova.domain.auth.entity.Auth;
@@ -7,6 +8,8 @@ import com.jova.domain.auth.service.AuthInfoService;
 import com.jova.domain.auth.service.LogoutService;
 import com.jova.domain.auth.service.ReissueTokenService;
 import com.jova.domain.auth.service.SignInService;
+import com.jova.global.security.key.Entity.Key;
+import com.jova.global.security.key.Repository.KeyRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,6 +30,7 @@ public class AuthController {
     private final ReissueTokenService reissueTokenService;
     private final LogoutService logoutService;
     private final AuthInfoService authInfoService;
+
 
     @Operation(summary = "로그인", description = "GAuth를 이용한 로그인을 수행하는 API")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "로그인 성공"), @ApiResponse(responseCode = "400", description = "로그인 실패")})
@@ -57,5 +61,10 @@ public class AuthController {
     @GetMapping
     public Auth getAuthInfo(@RequestHeader("Authorization") String accessToken) {
         return authInfoService.getAuthInfo(accessToken);
+    }
+
+    @PostMapping("/key")
+    public boolean keyLogin(@RequestBody @Valid KeySignInRequest signInRequest) {
+
     }
 }

@@ -1,6 +1,5 @@
 package com.jova.domain.application.entity;
 
-import com.jova.domain.auth.entity.Auth;
 import com.jova.domain.user.UserMajor;
 import jakarta.persistence.*;
 
@@ -24,10 +23,6 @@ public class Application {
 
     @Column(name="내용")
     private String content;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="Authid", nullable=false)
-    private Auth auth;
 
     @Column(name="작성된시간", nullable=false)
     private String createdAt;
