@@ -23,7 +23,7 @@ spring:
       matching-strategy: ant_path_matcher
   logging:
     level:
-      root: INFO
+      root: DEBUG
       org.springframework.web: DEBUG
     file:
       path: ./logs/application.log
