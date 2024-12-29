@@ -1,9 +1,8 @@
-package com.jova.domain.announcement.service;
+package com.jova.domain.announcement.service.impl;
 
-import com.jova.domain.announcement.dto.AnnouncementRequestDTO;
 import com.jova.domain.announcement.entity.Announcement;
 import com.jova.domain.announcement.repository.AnnouncementRepository;
-import com.jova.domain.announcement.service.impl.AnnouncementService;
+import com.jova.domain.announcement.service.AnnouncementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementRepository announcementRepository;
 
     @Override
-    public Announcement createAnnouncement(Announcement announcement) {
+    public Announcement saveAnnouncement(Announcement announcement) {
         return announcementRepository.save(announcement);
     }
 
@@ -30,7 +29,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public void DeleteAnnouncement(Long id) {
+    public void deleteAnnouncement(Long id) {
         announcementRepository.deleteById(id);
     }
 
