@@ -7,7 +7,6 @@ import com.jova.domain.auth.dto.response.TokenResponse;
 import com.jova.global.security.jwt.service.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -36,9 +35,8 @@ public class ArticleController {
     @GetMapping("/list")
 
     public List<Article> getAllArticles(){
-        logger.info("전체 게시글을 조회합니다.");
-        logger.error("게시글 조회에 실패했습니다.");
-        return articleService.findAll(); }
+        return articleService.findAll();
+    }
 
     @Operation(summary = "특정 게시글 조회", description = "특정 게시글을 조회하는 API")
     @GetMapping("/{id}")

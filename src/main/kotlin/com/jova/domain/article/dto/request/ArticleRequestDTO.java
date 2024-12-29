@@ -5,8 +5,6 @@ import com.jova.domain.user.UserMajor;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
-import java.time.LocalDateTime;
-
 @Builder
 public class ArticleRequestDTO {
     @NotBlank

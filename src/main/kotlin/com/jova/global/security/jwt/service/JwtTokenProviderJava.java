@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProviderJava {
-    private final Key key;
 
+    private final Key key;
     /**
      * @param secretKey
      * JWT 시크릿 대칭키 복호화
