@@ -42,16 +42,24 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val unrestrictedCorsConfig = CorsConfiguration().apply {
-            allowedOrigins = listOf("*")
+            allowedOrigins = listOf(
+                "http://localhost:5173",
+                "https://jova-fork.vercel.app/",
+                "http://localhost:8080"
+            )
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
             allowCredentials = true
         }
         val restrictedCorsConfig = CorsConfiguration().apply {
-            allowedOrigins = listOf("*")
+            allowedOrigins = listOf(
+                "http://localhost:5173",
+                "https://jova-fork.vercel.app/",
+                "http://localhost:8080"
+            )
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
-            allowCredentials = false
+            allowCredentials = true
             exposedHeaders = listOf("Authorization")
         }
         val source = UrlBasedCorsConfigurationSource().apply {
