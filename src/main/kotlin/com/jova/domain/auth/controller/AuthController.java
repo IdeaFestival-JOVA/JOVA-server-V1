@@ -30,6 +30,7 @@ public class AuthController {
     private final ReissueTokenService reissueTokenService;
     private final LogoutService logoutService;
     private final AuthInfoService authInfoService;
+    private final KeyRepository keyRepository;
 
 
     @Operation(summary = "로그인", description = "GAuth를 이용한 로그인을 수행하는 API")
@@ -64,7 +65,9 @@ public class AuthController {
     }
 
     @PostMapping("/key")
-    public boolean keyLogin(@RequestBody @Valid KeySignInRequest signInRequest) {
+    public void keyLogin(@RequestBody @Valid KeySignInRequest signInRequest) {
+        if (keyRepository.existsByKey(signInRequest.getKey())) {
 
+        }
     }
 }

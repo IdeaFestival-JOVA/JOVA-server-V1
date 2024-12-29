@@ -1,15 +1,14 @@
 package com.jova.domain.article.service.impl;
 
-import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.repository.ArticleRepositiory;
 
 import com.jova.domain.article.service.ArticleService;
+import com.jova.domain.user.UserMajor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +29,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article findArticleById(Long id) {
         return articleRepositiory.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+    }
+    @Override
+    public List<Article> findArticleByMajor(UserMajor major) {
+        return articleRepositiory.findArticlesByCategory(major);
     }
 
     public void deleteArticleById(Long id){
