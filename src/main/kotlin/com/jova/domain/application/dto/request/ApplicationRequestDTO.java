@@ -9,7 +9,6 @@ import lombok.Builder;
 public class ApplicationRequestDTO {
     private UserMajor major;
     private String content;
-    private Auth auth;
     private String createdAt;
 
     public Application toEntity(){
