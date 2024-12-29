@@ -16,7 +16,6 @@ public class ApplicationRequestDTO {
         return Application.builder()
                 .major(major)
                 .content(content)
-                .auth(auth)
                 .createdAt(createdAt)
                 .build();
     }
