@@ -25,7 +25,7 @@ public class AnnouncementController {
     }
 
     @PostMapping
-    public void createAnnouncement(AnnouncementRequestDTO announcementRequestDTO) {
+    public void createAnnouncement(@RequestBody AnnouncementRequestDTO announcementRequestDTO) {
         announcementService.saveAnnouncement(announcementRequestDTO.toEntity());
     }
 
