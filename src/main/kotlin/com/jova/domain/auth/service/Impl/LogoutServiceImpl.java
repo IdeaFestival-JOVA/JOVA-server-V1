@@ -8,6 +8,7 @@ import com.jova.global.security.jwt.exception.ExpiredRefreshTokenException;
 import com.jova.global.security.jwt.repository.RefreshRepository;
 import com.jova.global.security.jwt.service.BlacklistedTokenService;
 import com.jova.global.security.jwt.service.JwtProvider;
+import com.jova.global.security.jwt.service.JwtTokenProviderJava;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,6 @@ public class LogoutServiceImpl implements LogoutService {
             throw new ExpiredRefreshTokenException();
         }
         refreshRepository.deleteById(validRefreshToken.getRefreshToken());
-        blacklistedTokenService.addTokenToBlacklist(accessToken,jwtProvider.getExpiration(accessToken));
+        blacklistedTokenService.addTokenToBlacklist(accessToken, jwtProvider.getExpiration(accessToken));
     }
 }

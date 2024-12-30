@@ -23,8 +23,12 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProviderJava {
-    private final Key key;
 
+    private final Key key;
+    /**
+     * @param secretKey
+     * JWT 시크릿 대칭키 복호화
+     */
     public JwtTokenProviderJava(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
@@ -37,7 +41,7 @@ public class JwtTokenProviderJava {
 
         long now = (new Date()).getTime();
 
-        Date accessTokenExpiresIn = new Date(now + 86400000);
+        Date accessTokenExpiresIn = new Date(now + 1000 * 60 * 60 * 60); // ms초 단위로
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)

@@ -24,11 +24,15 @@ class SecurityConfig(
         http.csrf { it.disable() }.cors { it.configurationSource(corsConfigurationSource()) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { request ->
-                request.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll().requestMatchers(
-                    "/gauth/authorization", "/auth/reissue", "/auth/logout", "/auth/login"
-                ).permitAll().requestMatchers(
-                    "/auth"
-                ).authenticated().requestMatchers("/role/student").hasAuthority("GAUTH_ROLE_STUDENT")
+                request
+                    .requestMatchers(
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/gauth/authorization",
+                        "/auth/reissue",
+                        "/auth/logout",
+                        "/auth/login"
+                ).permitAll()
                     .requestMatchers("/role/teacher").hasAuthority("GAUTH_ROLE_TEACHER").anyRequest().permitAll()
             }.addFilterBefore(JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter::class.java)
         gAuthLoginConfigurer.configure(http)
@@ -38,16 +42,26 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val unrestrictedCorsConfig = CorsConfiguration().apply {
-            allowedOrigins = listOf("*")
+            allowedOrigins = listOf(
+                "http://localhost:5173",
+                "https://jova-fork.vercel.app/",
+                "http://localhost:8080",
+                "https://port-0-jova-backend-m0kvtwm45b2f2eb2.sel4.cloudtype.app"
+            )
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
-            allowCredentials = false
+            allowCredentials = true
         }
         val restrictedCorsConfig = CorsConfiguration().apply {
-            allowedOrigins = listOf("*")
+            allowedOrigins = listOf(
+                "http://localhost:5173",
+                "https://jova-fork.vercel.app/",
+                "http://localhost:8080",
+                "https://port-0-jova-backend-m0kvtwm45b2f2eb2.sel4.cloudtype.app"
+            )
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
-            allowCredentials = false
+            allowCredentials = true
             exposedHeaders = listOf("Authorization")
         }
         val source = UrlBasedCorsConfigurationSource().apply {
@@ -57,6 +71,10 @@ class SecurityConfig(
             registerCorsConfiguration("/auth/login", restrictedCorsConfig)
             registerCorsConfiguration("/auth/reissue", restrictedCorsConfig)
             registerCorsConfiguration("/auth/logout", restrictedCorsConfig)
+            registerCorsConfiguration("/articles/**", restrictedCorsConfig)
+            registerCorsConfiguration("/announcements/**", restrictedCorsConfig)
+            registerCorsConfiguration("/user/**", restrictedCorsConfig)
+
         }
         return source
     }

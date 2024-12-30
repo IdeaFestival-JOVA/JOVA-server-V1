@@ -1,5 +1,6 @@
 package com.jova.domain.user.Entity;
 
+import gauth.response.GAuthUserInfo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,16 +23,22 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false)
-    private String username;
+    private String name;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
-    private String nickname;
+    private String username;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String profileImage;
+
+    @Column(nullable = false)
+    private int grade;
+
+    @Column(nullable = false)
+    private int num;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
@@ -43,24 +50,24 @@ public class User implements UserDetails {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 }

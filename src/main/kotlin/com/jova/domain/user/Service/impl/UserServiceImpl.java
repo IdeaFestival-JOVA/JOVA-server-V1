@@ -1,9 +1,8 @@
-package com.jova.domain.user.Service;
+package com.jova.domain.user.Service.impl;
 
-import com.jova.domain.auth.dto.response.TokenResponse;
 import com.jova.domain.user.Entity.User;
 import com.jova.domain.user.Repository.UserRepository;
-import com.jova.domain.user.Service.impl.UserService;
+import com.jova.domain.user.Service.UserService;
 import com.jova.global.security.jwt.service.JwtTokenProviderJava;
 
 import lombok.RequiredArgsConstructor;
@@ -11,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,11 +19,17 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtTokenProviderJava jwtTokenProvider;
 
     @Override
     public Optional<User> findUserById(Long id){
         return userRepository.findById(id);
     }
+
+    @Override
+    public Optional<User> findUserByName(String username){
+        return userRepository.findUserByName(username);
+    }
+
+    @Override
+    public List<User> findUserAll() {return userRepository.findAll(); }
 }

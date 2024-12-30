@@ -27,7 +27,7 @@ public class ReissueTokenServiceImpl implements ReissueTokenService {
         String parseRefreshToken = jwtProvider.parseRefreshToken(refreshToken);
         RefreshToken refreshEntity = refreshRepository.findById(Objects.requireNonNull(parseRefreshToken)).orElseThrow(ExpiredRefreshTokenException::new);
         Auth auth = authRepository.findById(refreshEntity.getUserId()).orElseThrow(AuthNotFoundException::new);
-        TokenResponse tokenResponse = jwtProvider.generateTokenDto(Objects.requireNonNull(auth.getAuthid()));
+        TokenResponse tokenResponse = jwtProvider.generateTokenDto(Objects.requireNonNull(auth.getAuthid()), auth.getAuthority());
         RefreshToken token = new RefreshToken(tokenResponse.getRefreshToken(), auth.getAuthid(), tokenResponse.getRefreshTokenExpiration());
         refreshRepository.save(token);
         return tokenResponse;
