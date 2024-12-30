@@ -24,9 +24,11 @@ spring:
   logging:
     level:
       root: INFO
-      org.springframework.web: DEBUG
+      org.springframework.web: INFO
     file:
       path: ./logs/application.log
+    pattern:
+      console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n"
   data:
     jdbc:
       dialect: mysql

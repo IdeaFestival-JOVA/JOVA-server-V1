@@ -4,8 +4,6 @@ import com.jova.domain.user.UserMajor;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity(name="article")
 @Getter
 @Builder
@@ -22,14 +20,14 @@ public class Article {
     @Column(nullable = false, name = "article_category")
     private UserMajor category;
     @Column(nullable = false, name = "article_created_time")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private String createdAt;
     @Column(nullable = false, name = "article_expire_time")
-    private LocalDateTime endsAt;
+    private String endsAt;
     @Column(nullable = false, name = "aritlce_author")
     private String author;
 
     @Builder
-    public Article(String title, String content, UserMajor category, String author, LocalDateTime endsAt) {
+    public Article(String title, String content, UserMajor category, String author, String endsAt) {
         this.title = title;
         this.content = content;
         this.category = category;

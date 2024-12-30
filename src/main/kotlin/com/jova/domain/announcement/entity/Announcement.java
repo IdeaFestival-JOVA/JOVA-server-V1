@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor
 @Builder
@@ -18,6 +20,7 @@ public class Announcement {
     @Column(name="공지내용")
     private String content;
     @Column(name="공지작성시간")
-    private String createdAt;
-
+    private LocalDateTime createdAt;
+    @Column(name="작성자", nullable = false)
+    private String author;
 }
