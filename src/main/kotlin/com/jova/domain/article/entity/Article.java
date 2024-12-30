@@ -1,8 +1,11 @@
 package com.jova.domain.article.entity;
 
+import com.jova.domain.article.dto.ArticleDto;
 import com.jova.domain.user.UserMajor;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity(name="article")
 @Getter
@@ -20,7 +23,7 @@ public class Article {
     @Column(nullable = false, name = "article_category")
     private UserMajor category;
     @Column(nullable = false, name = "article_created_time")
-    private String createdAt;
+    private LocalDateTime createdAt;
     @Column(nullable = false, name = "aritlce_author")
     private String author;
 
@@ -30,6 +33,17 @@ public class Article {
         this.content = content;
         this.category = category;
         this.author = author;
+    }
+
+    public ArticleDto toDto(Long id, String title, String content, UserMajor category, String author) {
+        return ArticleDto.builder()
+                .article_id(getArticle_id())
+                .title(getTitle())
+                .content(getContent())
+                .category(getCategory())
+                .createdAt(getCreatedAt())
+                .author(getAuthor())
+                .build();
     }
 }
 

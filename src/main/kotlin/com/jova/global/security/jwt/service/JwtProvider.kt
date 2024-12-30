@@ -2,6 +2,7 @@ package com.jova.global.security.jwt.service
 
 import com.jova.domain.auth.dto.response.TokenResponse
 import com.jova.domain.auth.enums.Authority
+import com.jova.domain.auth.repository.AuthRepository
 import com.jova.domain.user.Role
 import com.jova.global.auth.service.AuthDetailsService
 import com.jova.global.exception.ErrorCode
@@ -36,7 +37,8 @@ import java.util.*
 class JwtProvider(
     private val authDetailsService: AuthDetailsService,
     private val blacklistedTokenService: BlacklistedTokenService,
-    private val keyRepository: KeyRepository
+    private val keyRepository: KeyRepository,
+    private val authRepository: AuthRepository
 ) {
     @Value("\${jwt.secret}")
     private lateinit var secretKey: String
@@ -142,7 +144,7 @@ class JwtProvider(
         val expiration = Date(now + ACCESS_TOKEN_TIME)
 
         return Jwts.builder()
-            .setSubject(key.toString())
+            .setSubject("daa8a879-2e82-4a0e-baa1-b4a073eb7741")
             .claim(AUTHORITIES_KEY, role)
             .setIssuedAt(Date())
             .setExpiration(expiration)

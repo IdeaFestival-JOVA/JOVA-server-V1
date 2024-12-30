@@ -2,12 +2,10 @@ package com.jova.domain.auth.controller;
 
 import com.jova.domain.auth.dto.request.KeySignInRequest;
 import com.jova.domain.auth.dto.request.SignInRequest;
+import com.jova.domain.auth.dto.request.SignUpRequest;
 import com.jova.domain.auth.dto.response.TokenResponse;
 import com.jova.domain.auth.entity.Auth;
-import com.jova.domain.auth.service.AuthInfoService;
-import com.jova.domain.auth.service.LogoutService;
-import com.jova.domain.auth.service.ReissueTokenService;
-import com.jova.domain.auth.service.SignInService;
+import com.jova.domain.auth.service.*;
 import com.jova.global.security.jwt.service.JwtProvider;
 import com.jova.global.security.key.Entity.Key;
 import com.jova.global.security.key.Repository.KeyRepository;
@@ -33,6 +31,7 @@ public class AuthController {
     private final AuthInfoService authInfoService;
     private final KeyRepository keyRepository;
     private final JwtProvider jwtProvider;
+    private final SignUpService signUpService;
 
 
     @Operation(summary = "로그인", description = "GAuth를 이용한 로그인을 수행하는 API")
@@ -64,6 +63,12 @@ public class AuthController {
     @GetMapping
     public Auth getAuthInfo(@RequestHeader("Authorization") String accessToken) {
         return authInfoService.getAuthInfo(accessToken);
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<Auth> signup(@RequestBody @Valid SignUpRequest signUpRequest) {
+        Auth auth = signUpService.signUp(signUpRequest);
+        return ResponseEntity.ok(auth);
     }
 
     @PostMapping("/key")

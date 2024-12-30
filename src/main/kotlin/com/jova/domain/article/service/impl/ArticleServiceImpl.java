@@ -22,7 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void saveArticle(Article article) {
+    public void saveArticle(Article article){
+
         articleRepositiory.save(article);
     }
 
