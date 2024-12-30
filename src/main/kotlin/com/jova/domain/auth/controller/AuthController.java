@@ -8,6 +8,7 @@ import com.jova.domain.auth.service.AuthInfoService;
 import com.jova.domain.auth.service.LogoutService;
 import com.jova.domain.auth.service.ReissueTokenService;
 import com.jova.domain.auth.service.SignInService;
+import com.jova.global.security.jwt.service.JwtProvider;
 import com.jova.global.security.key.Entity.Key;
 import com.jova.global.security.key.Repository.KeyRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,6 +32,7 @@ public class AuthController {
     private final LogoutService logoutService;
     private final AuthInfoService authInfoService;
     private final KeyRepository keyRepository;
+    private final JwtProvider jwtProvider;
 
 
     @Operation(summary = "로그인", description = "GAuth를 이용한 로그인을 수행하는 API")
@@ -65,9 +67,12 @@ public class AuthController {
     }
 
     @PostMapping("/key")
-    public void keyLogin(@RequestBody @Valid KeySignInRequest signInRequest) {
-        if (keyRepository.existsByKey(signInRequest.getKey())) {
-
+    public ResponseEntity<String> issueToken(@RequestParam String keyInput) {
+        try {
+            String token = jwtProvider.issueTokenIfKeyMatches(keyInput);
+            return ResponseEntity.ok(token);
+        } catch (IllegalArgumentException e) {
+             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

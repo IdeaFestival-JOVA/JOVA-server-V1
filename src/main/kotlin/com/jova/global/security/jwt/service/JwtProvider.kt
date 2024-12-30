@@ -2,11 +2,13 @@ package com.jova.global.security.jwt.service
 
 import com.jova.domain.auth.dto.response.TokenResponse
 import com.jova.domain.auth.enums.Authority
+import com.jova.domain.user.Role
 import com.jova.global.auth.service.AuthDetailsService
 import com.jova.global.exception.ErrorCode
 import com.jova.global.exception.JovaException
 import com.jova.global.security.jwt.exception.ExpiredTokenException
 import com.jova.global.security.jwt.exception.InvalidTokenException
+import com.jova.global.security.key.Repository.KeyRepository
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
@@ -21,6 +23,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
+import java.security.InvalidKeyException
 import java.security.Key
 import java.time.Instant
 import java.time.LocalDateTime
@@ -29,7 +32,9 @@ import java.util.*
 
 @Component
 class JwtProvider(
-    private val authDetailsService: AuthDetailsService, private val blacklistedTokenService: BlacklistedTokenService
+    private val authDetailsService: AuthDetailsService,
+    private val blacklistedTokenService: BlacklistedTokenService,
+    private val keyRepository: KeyRepository
 ) {
     @Value("\${jwt.secret}")
     private lateinit var secretKey: String
@@ -128,5 +133,30 @@ class JwtProvider(
         val expiration = claims.expiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
 
         blacklistedTokenService.addTokenToBlacklist(token, expiration)
+    }
+
+    fun generateAccessTokenWithKey(key: Key, role: Role): String {
+        val now = Date().time
+        val expiration = Date(now + ACCESS_TOKEN_TIME)
+
+        return Jwts.builder()
+            .setSubject(key.toString())
+            .claim(AUTHORITIES_KEY, role)
+            .setIssuedAt(Date())
+            .setExpiration(expiration)
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact()
+    }
+
+    fun issueTokenIfKeyMatches(keyInput: String): String {
+        val keyEntity = keyRepository.findByKey(keyInput)
+
+        if (keyEntity == null || keyInput.isEmpty()) {
+            throw InvalidKeyException("Invalid key input")
+        }
+
+        val role: Role = keyEntity.role
+
+        return generateAccessTokenWithKey(key, role)
     }
 }

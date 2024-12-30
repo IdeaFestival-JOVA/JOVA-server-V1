@@ -1,10 +1,13 @@
 package com.jova.global.security.key.component;
 
 import com.jova.domain.user.Role;
+import com.jova.global.security.key.Entity.Key;
 import com.jova.global.security.key.Repository.KeyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @Transactional
