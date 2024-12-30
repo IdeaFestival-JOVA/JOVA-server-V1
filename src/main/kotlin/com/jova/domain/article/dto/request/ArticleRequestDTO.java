@@ -32,7 +32,6 @@ public class ArticleRequestDTO {
                     .content(content)
                     .category(category)
                     .author(author)
-                    .endsAt(endsAt)
                     .build();
     }
 }

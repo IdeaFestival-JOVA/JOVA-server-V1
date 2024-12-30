@@ -21,18 +21,15 @@ public class Article {
     private UserMajor category;
     @Column(nullable = false, name = "article_created_time")
     private String createdAt;
-    @Column(nullable = false, name = "article_expire_time")
-    private String endsAt;
     @Column(nullable = false, name = "aritlce_author")
     private String author;
 
     @Builder
-    public Article(String title, String content, UserMajor category, String author, String endsAt) {
+    public Article(String title, String content, UserMajor category, String author) {
         this.title = title;
         this.content = content;
         this.category = category;
         this.author = author;
-        this.endsAt = endsAt;
     }
 }
 
