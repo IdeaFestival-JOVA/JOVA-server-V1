@@ -149,6 +149,11 @@ class JwtProvider(
     }
 
     fun issueTokenIfKeyMatches(keyInput: String): String {
+
+        if (keyInput.isEmpty()) {
+            throw InvalidKeyException("Key Input cannot be empty")
+        }
+
         val keyEntity = keyRepository.findByKey(keyInput)
 
         if (keyEntity == null || keyInput.isEmpty()) {
