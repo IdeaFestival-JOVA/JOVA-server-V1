@@ -12,6 +12,5 @@ import java.util.Optional;
 @Repository
 public interface KeyRepository extends JpaRepository<Key,String> {
     boolean existsByKey(String key);
-    @Query("SELECT k FROM Key k WHERE k.key = :key")
-    Key findByKey(@Param("key") String key);
+    Key findByKey(String key);
 }
