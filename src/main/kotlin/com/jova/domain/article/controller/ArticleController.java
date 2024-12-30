@@ -3,11 +3,10 @@ package com.jova.domain.article.controller;
 import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.service.ArticleService;
-import com.jova.domain.auth.dto.response.TokenResponse;
-import com.jova.global.security.jwt.service.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @NoArgsConstructor
+@AllArgsConstructor
 @RequestMapping("/articles")
 public class ArticleController {
 
