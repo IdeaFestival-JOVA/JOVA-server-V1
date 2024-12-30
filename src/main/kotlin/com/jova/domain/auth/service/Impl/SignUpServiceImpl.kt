@@ -17,7 +17,7 @@ class SignUpServiceImpl(
     override fun signUp(signUpRequest: SignUpRequest): Auth {
 
         if (authRepository.existsByEmail(signUpRequest.email)) {
-            throw AuthAlreayExisted("email already exists")
+            throw Exception("Email already in use")
         }
 
         return authRepository.save(Auth(
@@ -25,7 +25,7 @@ class SignUpServiceImpl(
             email = signUpRequest.email,
             name = signUpRequest.name,
             studentNum = StudentNum(grade = signUpRequest.grade, classNum = signUpRequest.classNum, number = signUpRequest.number),
-            authority = null,
+            authority = Authority.ROLE_ADMIN,
             password = signUpRequest.password
         ))
     }

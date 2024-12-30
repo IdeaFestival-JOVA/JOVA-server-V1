@@ -17,7 +17,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -32,10 +35,11 @@ public class AuthController {
     private final ReissueTokenService reissueTokenService;
     private final LogoutService logoutService;
     private final AuthInfoService authInfoService;
-    private final KeyRepository keyRepository;
     private final JwtProvider jwtProvider;
     private final SignUpService signUpService;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Operation(summary = "로그인", description = "GAuth를 이용한 로그인을 수행하는 API")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "로그인 성공"), @ApiResponse(responseCode = "400", description = "로그인 실패")})
@@ -66,6 +70,12 @@ public class AuthController {
     @GetMapping
     public Auth getAuthInfo(@RequestHeader("Authorization") String accessToken) {
         return authInfoService.getAuthInfo(accessToken);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<Auth> signIn(@RequestBody @Valid SignInRequest signInRequest) {
+        authInfoService.signIn(signInRequest.getEmail(), signInRequest.getPassword());
+        return ResponseEntity.ok(authInfoService.getAuthInfo(signInRequest.getEmail()));
     }
 
     @PostMapping("/signup")
