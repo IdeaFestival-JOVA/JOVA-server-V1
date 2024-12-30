@@ -17,6 +17,7 @@ import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
 import jakarta.servlet.http.HttpServletRequest
+import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -31,6 +32,7 @@ import java.time.ZoneId
 import java.util.*
 
 @Component
+@Slf4j
 class JwtProvider(
     private val authDetailsService: AuthDetailsService,
     private val blacklistedTokenService: BlacklistedTokenService,
@@ -154,14 +156,11 @@ class JwtProvider(
             throw InvalidKeyException("Key Input cannot be empty")
         }
 
-        val keyEntity = keyRepository.findByKey(keyInput)
-
-        if (keyEntity == null || keyInput.isEmpty()) {
+        println("Received key Input: $keyInput")
+        if(!keyRepository.existsByKey(keyInput)) {
+            println("Key not found in repository for input: $keyInput")
             throw InvalidKeyException("Invalid key input")
         }
-
-        val role: Role = keyEntity.role
-
-        return generateAccessTokenWithKey(key, role)
+        return generateAccessTokenWithKey(key, Role.ROLE_ADMIN)
     }
 }

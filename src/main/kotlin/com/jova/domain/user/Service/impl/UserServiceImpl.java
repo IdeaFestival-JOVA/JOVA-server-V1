@@ -19,8 +19,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtTokenProviderJava jwtTokenProvider;
 
     @Override
     public Optional<User> findUserById(Long id){
