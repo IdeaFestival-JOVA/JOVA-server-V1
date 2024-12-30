@@ -33,6 +33,6 @@ public class AuthInfoServiceImpl implements AuthInfoService {
         if (authRepository.findByEmail(uuid.toString()) != null) {
             throw new IllegalArgumentException("존재하지 않는 유저입니다.");
         }
-        return authRepository.findAuthByAuthId(uuid);
+        return authRepository.findAuthByAuthid(uuid);
     }
 }
