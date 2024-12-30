@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/announcements")
 public class AnnouncementController {
     private final AnnouncementServiceImpl announcementService;
-    private AnnouncementRequestDTO announcementRequestDTO;
 
     @GetMapping("/list")
     public List<Announcement> getAllAnnouncements() {
