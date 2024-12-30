@@ -66,7 +66,7 @@ public class AuthController {
         return authInfoService.getAuthInfo(accessToken);
     }
 
-    @GetMapping("/key}")
+    @PostMapping("/key}")
     public ResponseEntity<String> issueToken(@RequestParam String keyInput) {
         try {
             String token = jwtProvider.issueTokenIfKeyMatches(keyInput);
