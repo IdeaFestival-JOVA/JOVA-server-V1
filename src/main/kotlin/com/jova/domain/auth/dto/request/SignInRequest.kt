@@ -1,13 +1,6 @@
-package com.jova.domain.auth.dto.request;
+package com.jova.domain.auth.dto.request
 
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class SignInRequest {
-    @NotBlank String code;
-}
+data class SignInRequest(
+    val email: String,
+    val password: String,
+)

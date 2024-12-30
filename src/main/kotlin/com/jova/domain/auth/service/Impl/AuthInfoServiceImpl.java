@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AuthInfoServiceImpl implements AuthInfoService {
@@ -24,5 +26,13 @@ public class AuthInfoServiceImpl implements AuthInfoService {
         Object Object = jwtClaims.getPrincipal();
         AuthDetails authDetails = (AuthDetails) Object;
         return authRepository.findByEmail(authDetails.getUsername());
+    }
+
+    @Override
+    public Auth getUserInfo(UUID uuid) {
+        if (authRepository.findByEmail(uuid.toString()) != null) {
+            throw new IllegalArgumentException("존재하지 않는 유저입니다.");
+        }
+        return authRepository.findAuthByAuthId(uuid);
     }
 }

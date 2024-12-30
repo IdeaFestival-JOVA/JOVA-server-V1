@@ -15,15 +15,12 @@ public class ArticleRequestDTO {
     private String content;
     @NotBlank
     private UserMajor category;
-    @NotBlank
-    private String author;
 
     @Builder
-    public ArticleRequestDTO(String title, String content, UserMajor category, String author) {
+    public ArticleRequestDTO(String title, String content, UserMajor category) {
         this.title = title;
         this.content = content;
         this.category = category;
-        this.author = author;
     }
 
     public Article toEntity(){
@@ -31,7 +28,6 @@ public class ArticleRequestDTO {
                     .title(title)
                     .content(content)
                     .category(category)
-                    .author(author)
                     .createdAt(LocalDateTime.now())
                     .build();
     }

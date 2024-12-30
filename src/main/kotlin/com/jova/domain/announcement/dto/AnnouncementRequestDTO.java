@@ -6,7 +6,6 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 public class AnnouncementRequestDTO {
-    private Long announcement_Id;
     private String title;
     private String content;
     private String author;

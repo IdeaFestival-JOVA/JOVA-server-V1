@@ -17,5 +17,7 @@ data class Auth(
 
     @Embedded var studentNum: StudentNum? = null,
 
-    @Enumerated(EnumType.STRING) var authority: Authority? = null
+    @Enumerated(EnumType.STRING) var authority: Authority? = null,
+
+    var password: String
 )

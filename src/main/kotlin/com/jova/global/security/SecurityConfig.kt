@@ -74,7 +74,7 @@ class SecurityConfig(
             registerCorsConfiguration("/articles/**", restrictedCorsConfig)
             registerCorsConfiguration("/announcements/**", restrictedCorsConfig)
             registerCorsConfiguration("/user/**", restrictedCorsConfig)
-
+            registerCorsConfiguration("/auth/**", restrictedCorsConfig)
         }
         return source
     }
