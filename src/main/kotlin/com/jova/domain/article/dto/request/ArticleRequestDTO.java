@@ -5,6 +5,8 @@ import com.jova.domain.user.UserMajor;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 @Builder
 public class ArticleRequestDTO {
     @NotBlank
@@ -15,15 +17,13 @@ public class ArticleRequestDTO {
     private UserMajor category;
     @NotBlank
     private String author;
-    private String endsAt;
 
     @Builder
-    public ArticleRequestDTO(String title, String content, UserMajor category, String author, String endsAt) {
+    public ArticleRequestDTO(String title, String content, UserMajor category, String author) {
         this.title = title;
         this.content = content;
         this.category = category;
         this.author = author;
-        this.endsAt = endsAt;
     }
 
     public Article toEntity(){
@@ -32,7 +32,7 @@ public class ArticleRequestDTO {
                     .content(content)
                     .category(category)
                     .author(author)
-                    .endsAt(endsAt)
+                    .createdAt(LocalDateTime.now())
                     .build();
     }
 }

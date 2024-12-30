@@ -3,12 +3,12 @@ package com.jova.domain.article.controller;
 import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.service.ArticleService;
-import com.jova.domain.auth.dto.response.TokenResponse;
-import com.jova.global.security.jwt.service.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -20,16 +20,15 @@ import java.util.List;
 @Tag(name="ArticleAPI", description = "게시글 관리 API")
 @Slf4j
 @RestController
-@NoArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/articles")
 public class ArticleController {
 
     public static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     @Operation(summary = "게시글 전체 조회", description = "게시글을 전체 조회하는 API")
     @GetMapping("/list")
-
     public List<Article> getAllArticles(){
         return articleService.findAll();
     }

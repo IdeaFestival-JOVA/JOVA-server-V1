@@ -22,7 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void saveArticle(Article article) {
+    public void saveArticle(Article article){
+
         articleRepositiory.save(article);
     }
 
@@ -34,7 +35,7 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> findArticleByMajor(UserMajor major) {
         return articleRepositiory.findArticlesByCategory(major);
     }
-
+    @Override
     public void deleteArticleById(Long id){
         articleRepositiory.deleteById(id);
     }

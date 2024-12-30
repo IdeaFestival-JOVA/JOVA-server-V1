@@ -2,6 +2,7 @@ package com.jova.global.security.jwt.service
 
 import com.jova.domain.auth.dto.response.TokenResponse
 import com.jova.domain.auth.enums.Authority
+import com.jova.domain.auth.repository.AuthRepository
 import com.jova.domain.user.Role
 import com.jova.global.auth.service.AuthDetailsService
 import com.jova.global.exception.ErrorCode
@@ -17,6 +18,7 @@ import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
 import jakarta.servlet.http.HttpServletRequest
+import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -31,10 +33,12 @@ import java.time.ZoneId
 import java.util.*
 
 @Component
+@Slf4j
 class JwtProvider(
     private val authDetailsService: AuthDetailsService,
     private val blacklistedTokenService: BlacklistedTokenService,
-    private val keyRepository: KeyRepository
+    private val keyRepository: KeyRepository,
+    private val authRepository: AuthRepository
 ) {
     @Value("\${jwt.secret}")
     private lateinit var secretKey: String
@@ -140,7 +144,7 @@ class JwtProvider(
         val expiration = Date(now + ACCESS_TOKEN_TIME)
 
         return Jwts.builder()
-            .setSubject(key.toString())
+            .setSubject("daa8a879-2e82-4a0e-baa1-b4a073eb7741")
             .claim(AUTHORITIES_KEY, role)
             .setIssuedAt(Date())
             .setExpiration(expiration)
@@ -149,14 +153,16 @@ class JwtProvider(
     }
 
     fun issueTokenIfKeyMatches(keyInput: String): String {
-        val keyEntity = keyRepository.findByKey(keyInput)
 
-        if (keyEntity == null || keyInput.isEmpty()) {
-            throw InvalidKeyException("Invalid key input")
+        if (keyInput.isEmpty()) {
+            throw InvalidKeyException("Key Input cannot be empty")
         }
 
-        val role: Role = keyEntity.role
-
-        return generateAccessTokenWithKey(key, role)
+        println("Received key Input: $keyInput")
+        if(!keyRepository.existsByKey(keyInput)) {
+            println("Key not found in repository for input: $keyInput")
+            throw InvalidKeyException("Invalid key input")
+        }
+        return generateAccessTokenWithKey(key, Role.ROLE_ADMIN)
     }
 }

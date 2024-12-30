@@ -45,17 +45,19 @@ class SecurityConfig(
             allowedOrigins = listOf(
                 "http://localhost:5173",
                 "https://jova-fork.vercel.app/",
-                "http://localhost:8080"
+                "http://localhost:8080",
+                "https://port-0-jova-backend-m0kvtwm45b2f2eb2.sel4.cloudtype.app"
             )
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
-            allowCredentials = false
+            allowCredentials = true
         }
         val restrictedCorsConfig = CorsConfiguration().apply {
             allowedOrigins = listOf(
                 "http://localhost:5173",
                 "https://jova-fork.vercel.app/",
-                "http://localhost:8080"
+                "http://localhost:8080",
+                "https://port-0-jova-backend-m0kvtwm45b2f2eb2.sel4.cloudtype.app"
             )
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
@@ -69,7 +71,10 @@ class SecurityConfig(
             registerCorsConfiguration("/auth/login", restrictedCorsConfig)
             registerCorsConfiguration("/auth/reissue", restrictedCorsConfig)
             registerCorsConfiguration("/auth/logout", restrictedCorsConfig)
-            registerCorsConfiguration("/articles/list", restrictedCorsConfig)
+            registerCorsConfiguration("/articles/**", restrictedCorsConfig)
+            registerCorsConfiguration("/announcements/**", restrictedCorsConfig)
+            registerCorsConfiguration("/user/**", restrictedCorsConfig)
+
         }
         return source
     }
