@@ -17,7 +17,7 @@ public class ArticleRequestDTO {
     private UserMajor category;
 
     @Builder
-    public ArticleRequestDTO(String title, String content, UserMajor category) {
+    public ArticleRequestDTO(String title, String content, UserMajor category)   {
         this.title = title;
         this.content = content;
         this.category = category;

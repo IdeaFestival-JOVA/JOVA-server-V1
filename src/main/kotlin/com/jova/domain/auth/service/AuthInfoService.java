@@ -7,5 +7,4 @@ import java.util.UUID;
 public interface AuthInfoService {
     Auth getAuthInfo(String accessToken);
     Auth getUserInfo(UUID authId);
-    String signIn(String email, String password);
 }
