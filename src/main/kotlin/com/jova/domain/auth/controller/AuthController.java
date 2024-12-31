@@ -84,9 +84,6 @@ public class AuthController {
         }
     }
 
-    @GetMapping()
-    public Auth getUserInfo(@RequestParam UUID authid) {
 
-    }
 
 }
