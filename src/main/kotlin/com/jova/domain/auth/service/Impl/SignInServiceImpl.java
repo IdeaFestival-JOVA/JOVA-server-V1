@@ -1,5 +1,6 @@
 package com.jova.domain.auth.service.Impl;
 
+import com.jova.domain.auth.dto.request.GauthSignInRequest;
 import com.jova.domain.auth.dto.request.SignInRequest;
 import com.jova.global.security.jwt.entity.RefreshToken;
 import com.jova.domain.auth.dto.response.TokenResponse;
@@ -48,7 +49,7 @@ public class SignInServiceImpl implements SignInService {
     }
 
     @Override
-    public TokenResponse signIn(SignInRequest request) {
+    public TokenResponse signIn(GauthSignInRequest request) {
         try {
             GAuthToken gAuthToken = gAuth.generateToken(request.getCode(), clientId, clientSecret, redirectUri);
             String accessToken = gAuthToken.getAccessToken();

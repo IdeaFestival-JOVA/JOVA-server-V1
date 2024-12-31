@@ -70,6 +70,7 @@ class SecurityConfig(
             registerCorsConfiguration("/gauth/authorization", restrictedCorsConfig)
             registerCorsConfiguration("/auth/login", restrictedCorsConfig)
             registerCorsConfiguration("/auth/reissue", restrictedCorsConfig)
+            registerCorsConfiguration("/auth/signup", restrictedCorsConfig)
             registerCorsConfiguration("/auth/logout", restrictedCorsConfig)
             registerCorsConfiguration("/articles/**", restrictedCorsConfig)
             registerCorsConfiguration("/announcements/**", restrictedCorsConfig)

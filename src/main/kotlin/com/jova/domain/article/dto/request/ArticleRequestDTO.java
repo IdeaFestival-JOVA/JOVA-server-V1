@@ -15,11 +15,11 @@ public class ArticleRequestDTO {
     private String content;
     @NotBlank
     private UserMajor category;
-    @NotBlank
+
     private String author;
 
     @Builder
-    public ArticleRequestDTO(String title, String content, UserMajor category, String author) {
+    public ArticleRequestDTO(String title, String content, UserMajor category, String author)   {
         this.title = title;
         this.content = content;
         this.category = category;

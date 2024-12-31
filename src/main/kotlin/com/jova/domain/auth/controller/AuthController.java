@@ -1,5 +1,6 @@
 package com.jova.domain.auth.controller;
 
+import com.jova.domain.auth.dto.request.GauthSignInRequest;
 import com.jova.domain.auth.dto.request.KeySignInRequest;
 import com.jova.domain.auth.dto.request.SignInRequest;
 import com.jova.domain.auth.dto.request.SignUpRequest;
@@ -16,8 +17,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Slf4j
 @Tag(name = "Auth", description = "계정관련 API")
@@ -29,7 +35,6 @@ public class AuthController {
     private final ReissueTokenService reissueTokenService;
     private final LogoutService logoutService;
     private final AuthInfoService authInfoService;
-    private final KeyRepository keyRepository;
     private final JwtProvider jwtProvider;
     private final SignUpService signUpService;
 
@@ -37,7 +42,7 @@ public class AuthController {
     @Operation(summary = "로그인", description = "GAuth를 이용한 로그인을 수행하는 API")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "로그인 성공"), @ApiResponse(responseCode = "400", description = "로그인 실패")})
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody @Valid SignInRequest signInRequest) {
+    public ResponseEntity<TokenResponse> login(@RequestBody @Valid GauthSignInRequest signInRequest) {
         TokenResponse tokenResponse = signInService.signIn(signInRequest);
         return ResponseEntity.ok(tokenResponse);
     }
@@ -80,4 +85,7 @@ public class AuthController {
              return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
+
 }

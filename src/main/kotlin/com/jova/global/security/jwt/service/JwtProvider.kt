@@ -144,7 +144,7 @@ class JwtProvider(
         val expiration = Date(now + ACCESS_TOKEN_TIME)
 
         return Jwts.builder()
-            .setSubject("daa8a879-2e82-4a0e-baa1-b4a073eb7741")
+            .setSubject("ef80298f-c50b-4da3-81a6-1da86d398a29")
             .claim(AUTHORITIES_KEY, role)
             .setIssuedAt(Date())
             .setExpiration(expiration)
