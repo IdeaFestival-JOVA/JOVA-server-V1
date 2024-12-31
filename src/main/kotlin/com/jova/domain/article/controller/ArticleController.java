@@ -3,12 +3,11 @@ package com.jova.domain.article.controller;
 import com.jova.domain.article.dto.request.ArticleRequestDTO;
 import com.jova.domain.article.entity.Article;
 import com.jova.domain.article.service.ArticleService;
-import com.jova.domain.user.UserMajor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -63,10 +62,5 @@ public class ArticleController {
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제하는 API")
     @DeleteMapping("/{id}")
     public void deleteArticleById(@PathVariable @NotNull Long id){articleService.deleteArticleById(id);}
-
-    @GetMapping
-    public List<Article> findArticlesByCategory(@RequestParam UserMajor category) {
-        return articleService.findArticleByMajor(category);
-    }
 
 }

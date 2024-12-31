@@ -24,7 +24,7 @@ public class Article {
     private UserMajor category;
     @Column(nullable = false, name = "article_created_time")
     private LocalDateTime createdAt;
-    @Column(nullable = false, name = "aritlce_author")
+    @Column(name = "aritlce_author")
     private String author;
 
     @Builder
